@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+   <androidx.percentlayout.widget.PercentRelativeLayout
+       android:id="@+id/temp1"
+       android:layout_width="match_parent"
+       android:layout_height="140dp"
+       android:layout_centerVertical="true"
+       android:background="@drawable/button_circle_shape">
+
+       <!--  车辆图标  -->
+       <ImageView
+           android:id="@+id/car"
+           android:layout_width="0dp"
+           android:layout_height="0dp"
+           android:scaleType="fitStart"
+           app:layout_heightPercent="85%"
+           app:layout_marginLeftPercent="1%"
+           app:layout_marginTopPercent="4%"
+           app:layout_widthPercent="20%" />
+
+       <!--  剩余电量  -->
+       <TextView
+           android:id="@+id/electricity"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@id/car"
+           android:layout_marginTop="-5dp"
+           android:text="电量99%"
+           app:layout_marginLeftPercent="6.5%" />
+
+       <!--  车辆控制  -->
+       <androidx.percentlayout.widget.PercentRelativeLayout
+           android:layout_width="0dp"
+           android:layout_height="0dp"
+           app:layout_heightPercent="80%"
+           app:layout_widthPercent="70%"
+           android:layout_centerVertical="true"
+           android:layout_alignParentRight="true"
+           app:layout_marginRightPercent="3%"
+           >
+
+           <!--  第一排  -->
+           <androidx.percentlayout.widget.PercentRelativeLayout
+               android:id="@+id/one"
+               android:layout_width="0dp"
+               android:layout_height="0dp"
+               app:layout_heightPercent="50%"
+               app:layout_widthPercent="100%"
+               android:layout_alignParentRight="true"
+               >
+
+               <!--  2D  -->
+               <androidx.percentlayout.widget.PercentRelativeLayout
+                   android:id="@+id/two_view"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:background="@drawable/button_circle_shape_item"
+                   app:layout_heightPercent="90%"
+                   app:layout_widthPercent="45%">
+
+                   <ImageView
+                       android:id="@+id/img_two_d"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:layout_centerVertical="true"
+                       android:layout_marginLeft="-8dp"
+                       android:src="@drawable/switch_watch_blue"
+                       app:layout_heightPercent="90%"
+                       app:layout_widthPercent="40%" />
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_alignParentRight="true"
+                       android:layout_centerVertical="true"
+                       android:layout_toRightOf="@id/img_two_d"
+                       android:text="2D"
+                       android:textSize="14dp"
+                       app:layout_marginLeftPercent="15%"
+
+                       />
+
+
+               </androidx.percentlayout.widget.PercentRelativeLayout>
+
+
+               <!--  30  -->
+               <androidx.percentlayout.widget.PercentRelativeLayout
+                   android:id="@+id/thirty"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_toRightOf="@id/ninety"
+                   android:background="@drawable/button_circle_shape_item"
+                   app:layout_heightPercent="90%"
+                   android:layout_alignParentRight="true"
+                   app:layout_marginLeftPercent="5%"
+                   app:layout_widthPercent="45%">
+
+                   <ImageView
+                       android:id="@+id/img_thirty"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:layout_centerVertical="true"
+                       android:layout_marginLeft="-8dp"
+                       android:src="@drawable/switch_watch_blue"
+                       app:layout_heightPercent="90%"
+                       app:layout_widthPercent="40%" />
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_centerVertical="true"
+                       android:layout_centerHorizontal="true"
+                       android:layout_toRightOf="@id/img_thirty"
+                       android:text="30"
+                       android:textSize="13dp"
+                       app:layout_marginLeftPercent="15%" />
+
+
+               </androidx.percentlayout.widget.PercentRelativeLayout>
+
+
+
+           </androidx.percentlayout.widget.PercentRelativeLayout>
+
+
+           <!--  第二排  -->
+           <androidx.percentlayout.widget.PercentRelativeLayout
+               android:id="@+id/two"
+               android:layout_width="0dp"
+               android:layout_height="0dp"
+               android:layout_below="@id/one"
+               android:layout_alignParentRight="true"
+               app:layout_heightPercent="50%"
+               app:layout_widthPercent="100%">
+
+
+               <!--  60  -->
+               <androidx.percentlayout.widget.PercentRelativeLayout
+                   android:id="@+id/sixty"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:background="@drawable/button_circle_shape_item"
+                   app:layout_heightPercent="90%"
+                   app:layout_widthPercent="45%">
+
+                   <ImageView
+                       android:id="@+id/img_sixty"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:layout_centerVertical="true"
+                       android:layout_marginLeft="-8dp"
+                       android:src="@drawable/switch_watch_blue"
+                       app:layout_heightPercent="90%"
+                       app:layout_widthPercent="40%" />
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_centerVertical="true"
+                       android:layout_toRightOf="@id/img_sixty"
+                       android:text="60"
+                       android:textSize="14dp"
+                       app:layout_marginLeftPercent="15%" />
+
+
+               </androidx.percentlayout.widget.PercentRelativeLayout>
+
+
+               <!--  90  -->
+               <androidx.percentlayout.widget.PercentRelativeLayout
+                   android:id="@+id/ninety"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:background="@drawable/button_circle_shape_item"
+                   app:layout_heightPercent="90%"
+                   app:layout_marginLeftPercent="5%"
+                   app:layout_widthPercent="45%"
+                   android:layout_alignParentRight="true"
+                   >
+
+                   <ImageView
+                       android:id="@+id/img_ninety"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:layout_centerVertical="true"
+                       android:layout_marginLeft="-8dp"
+                       android:src="@drawable/switch_watch_blue"
+                       app:layout_heightPercent="90%"
+                       app:layout_widthPercent="40%" />
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_centerVertical="true"
+                       android:layout_toRightOf="@id/img_ninety"
+                       android:text="90"
+                       android:textSize="13dp"
+                       app:layout_marginLeftPercent="15%" />
+
+
+               </androidx.percentlayout.widget.PercentRelativeLayout>
+
+
+
+
+           </androidx.percentlayout.widget.PercentRelativeLayout>
+
+
+
+       </androidx.percentlayout.widget.PercentRelativeLayout>
+
+   </androidx.percentlayout.widget.PercentRelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_below="@id/temp1"
+        />
+
+</RelativeLayout>

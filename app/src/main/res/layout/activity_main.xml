@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.percentlayout.widget.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@color/background"
+    >
+
+
+    <!--  左侧布局  -->
+    <androidx.percentlayout.widget.PercentRelativeLayout
+        android:id="@+id/left"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        app:layout_heightPercent="100%"
+        app:layout_widthPercent="50%">
+
+        <!--  系统命令  -->
+        <androidx.percentlayout.widget.PercentRelativeLayout
+            android:id="@+id/system_control"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@drawable/button_circle_shape"
+            app:layout_heightPercent="25%"
+            app:layout_marginLeftPercent="3%"
+            app:layout_marginTopPercent="5%"
+            app:layout_widthPercent="97%">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="系统命令"
+                android:textColor="#000"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <!--  系统检查 : 执行所有情景 -->
+            <androidx.percentlayout.widget.PercentRelativeLayout
+                android:id="@+id/system_check"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@drawable/button_circle_shape_item"
+                app:layout_heightPercent="22%"
+                app:layout_marginLeftPercent="1%"
+                app:layout_marginTopPercent="35%"
+                app:layout_widthPercent="47%">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/system_check" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="系统检查"
+                    android:textSize="13dp"
+                    app:layout_marginLeftPercent="13%" />
+
+            </androidx.percentlayout.widget.PercentRelativeLayout>
+
+            <!--  车辆检查 : 所有车前后移动 -->
+            <androidx.percentlayout.widget.PercentRelativeLayout
+                android:id="@+id/car_check"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_below="@id/system_check"
+                android:layout_marginTop="19dp"
+                android:background="@drawable/button_circle_shape_item"
+                app:layout_heightPercent="22%"
+                app:layout_marginLeftPercent="1%"
+                app:layout_marginTopPercent="16%"
+                app:layout_widthPercent="47%">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/car_check" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="车辆检查"
+                    android:textSize="13dp"
+                    app:layout_marginLeftPercent="13%" />
+
+            </androidx.percentlayout.widget.PercentRelativeLayout>
+
+
+            <!--  网络检查 : 连接中控 -->
+            <androidx.percentlayout.widget.PercentRelativeLayout
+                android:id="@+id/network_check"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="19dp"
+                android:background="@drawable/button_circle_shape_item"
+                app:layout_heightPercent="22%"
+                app:layout_marginRightPercent="1%"
+                app:layout_marginTopPercent="35%"
+                app:layout_widthPercent="47%">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/network_check" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="网络检查"
+                    android:textSize="13dp"
+                    app:layout_marginLeftPercent="13%" />
+
+            </androidx.percentlayout.widget.PercentRelativeLayout>
+
+
+            <!--  车辆置换 -->
+            <androidx.percentlayout.widget.PercentRelativeLayout
+                android:id="@+id/car_change"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_below="@id/network_check"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="19dp"
+                android:background="@drawable/button_circle_shape_item"
+                app:layout_heightPercent="22%"
+                app:layout_marginRightPercent="1%"
+                app:layout_marginTopPercent="16%"
+                app:layout_widthPercent="47%">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/car_change" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="车辆置换"
+                    android:textSize="13dp"
+                    app:layout_marginLeftPercent="13%" />
+
+            </androidx.percentlayout.widget.PercentRelativeLayout>
+
+        </androidx.percentlayout.widget.PercentRelativeLayout>
+
+
+        <!--  车辆控制  -->
+        <androidx.percentlayout.widget.PercentRelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_below="@+id/system_control"
+            android:background="@drawable/button_circle_shape_item"
+            app:layout_heightPercent="65%"
+            app:layout_marginBottomPercent="2%"
+            app:layout_marginLeftPercent="3%"
+            app:layout_marginTopPercent="3%"
+            app:layout_widthPercent="97%">
+
+            <TextView
+                android:id="@+id/car_control"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="车辆控制"
+                android:textColor="#000"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/car_list"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@id/car_control"
+                android:layout_marginTop="10dp"
+                android:divider="#ffffff" />
+
+
+        </androidx.percentlayout.widget.PercentRelativeLayout>
+
+    </androidx.percentlayout.widget.PercentRelativeLayout>
+
+
+    <!--  右侧布局  -->
+    <androidx.percentlayout.widget.PercentRelativeLayout
+        android:id="@+id/right"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_toRightOf="@id/left"
+        app:layout_heightPercent="100%"
+        app:layout_widthPercent="50%">
+
+
+        <androidx.percentlayout.widget.PercentRelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@drawable/button_circle_shape"
+            app:layout_heightPercent="96%"
+            app:layout_marginLeftPercent="3%"
+            app:layout_marginRightPercent="3%"
+            app:layout_marginTopPercent="5%"
+            app:layout_marginBottomPercent="2%"
+            app:layout_widthPercent="97%">
+
+            <!--  情景选择  -->
+            <ListView
+                android:id="@+id/drama_choose"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:dividerHeight="0dp"
+                android:divider="#ffffff"
+                />
+
+        </androidx.percentlayout.widget.PercentRelativeLayout>
+
+
+
+
+    </androidx.percentlayout.widget.PercentRelativeLayout>
+
+
+</androidx.percentlayout.widget.PercentRelativeLayout>

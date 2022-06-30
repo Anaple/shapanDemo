@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.percentlayout.widget.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.percentlayout.widget.PercentRelativeLayout
+        android:id="@+id/temp1"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/button_circle_shape_item"
+        >
+
+        <ImageView
+            android:id="@+id/image_ico"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/drama1"
+            app:layout_heightPercent="60%"
+            app:layout_marginLeftPercent="3%"
+            app:layout_widthPercent="10%" />
+
+        <ImageView
+            android:id="@+id/on_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/on"
+            android:layout_alignParentRight="true"
+            app:layout_heightPercent = "60%"
+            app:layout_widthPercent = "10%"
+            app:layout_marginRightPercent="3%"
+            android:layout_centerVertical="true"
+            />
+
+        <!--  情景  -->
+        <TextView
+            android:id="@+id/drama"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/image_ico"
+            android:layout_toLeftOf="@id/on_off"
+            app:layout_marginTopPercent="20%"
+            android:text="场景1 : 道路危险状况提示"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_marginLeftPercent="3%"
+            app:layout_marginRightPercent="3%"
+            />
+
+        <!--  情景内容  -->
+        <TextView
+            android:layout_below="@id/drama"
+            android:id="@+id/drama_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/image_ico"
+            android:layout_toLeftOf="@id/on_off"
+            app:layout_marginTopPercent="5%"
+            android:text="蓝色主车停车场起点。达到路口红色点位开启预警提醒（同时开启雨雾模拟），车辆驶过湿滑路段，经过绿色点位场景结束。"
+            android:textSize="13dp"
+            android:textStyle="bold"
+            app:layout_marginLeftPercent="3%"
+            app:layout_marginRightPercent="3%"
+            />
+
+    </androidx.percentlayout.widget.PercentRelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@id/temp1"
+        />
+
+
+</androidx.percentlayout.widget.PercentRelativeLayout>
