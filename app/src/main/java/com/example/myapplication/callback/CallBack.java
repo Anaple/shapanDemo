@@ -12,7 +12,7 @@ public interface CallBack {
     void dianliang(int CarIndex,int number);
 
     // 检查车辆正常
-    void CarStateOK(int carIndex);
+    void CarStateOK(int carIndex,int canUse);
 
     // 检查车辆错误
     void CarStateError(int carIndex);
@@ -20,7 +20,6 @@ public interface CallBack {
     //
     void DramaSuccess(int carIndex);
 
-    // 检查连接车辆
-    void checkCarConnent(int carIndex );
+
 
 }

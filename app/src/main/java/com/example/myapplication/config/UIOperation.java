@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.config;
 
 import android.app.Activity;
 import android.graphics.Color;

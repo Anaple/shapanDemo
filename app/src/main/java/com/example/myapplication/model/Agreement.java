@@ -1,11 +1,11 @@
-package com.example.myapplication;
-
+package com.example.myapplication.model;
+// socket 通讯操作封装
 public class Agreement {
 
     // 情景控制
     public static byte[] getDrama(byte dramaindex)
     {
-        byte[] data = new byte[]{0x55,0x04,dramaindex,0x56};
+        byte[] data = new byte[]{0x55,0x0A,dramaindex,0x56};
         return data;
     }
 
