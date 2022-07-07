@@ -27,11 +27,12 @@
             app:layout_heightPercent="25%"
             app:layout_marginLeftPercent="3%"
             app:layout_marginTopPercent="5%"
-            app:layout_widthPercent="97%">
+            app:layout_widthPercent="46%">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_marginLeftPercent="5%"
                 android:text="系统命令"
                 android:textColor="#000"
                 android:textSize="20dp"
@@ -43,9 +44,9 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:background="@drawable/button_circle_shape_item"
-                app:layout_heightPercent="22%"
+                app:layout_heightPercent="32%"
                 app:layout_marginLeftPercent="1%"
-                app:layout_marginTopPercent="35%"
+                app:layout_marginTopPercent="25%"
                 app:layout_widthPercent="47%">
 
                 <ImageView
@@ -61,8 +62,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="系统检查"
+                    android:layout_marginLeft="35dp"
                     android:textSize="13dp"
-                    app:layout_marginLeftPercent="13%" />
+                     />
 
             </androidx.percentlayout.widget.PercentRelativeLayout>
 
@@ -74,9 +76,9 @@
                 android:layout_below="@id/system_check"
                 android:layout_marginTop="19dp"
                 android:background="@drawable/button_circle_shape_item"
-                app:layout_heightPercent="22%"
+                app:layout_heightPercent="32%"
                 app:layout_marginLeftPercent="1%"
-                app:layout_marginTopPercent="16%"
+                app:layout_marginTopPercent="5%"
                 app:layout_widthPercent="47%">
 
                 <ImageView
@@ -93,7 +95,7 @@
                     android:layout_centerVertical="true"
                     android:text="车辆检查"
                     android:textSize="13dp"
-                    app:layout_marginLeftPercent="13%" />
+                    android:layout_marginLeft="35dp" />
 
             </androidx.percentlayout.widget.PercentRelativeLayout>
 
@@ -106,9 +108,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="19dp"
                 android:background="@drawable/button_circle_shape_item"
-                app:layout_heightPercent="22%"
+                app:layout_heightPercent="32%"
                 app:layout_marginRightPercent="1%"
-                app:layout_marginTopPercent="35%"
+                app:layout_marginTopPercent="25%"
                 app:layout_widthPercent="47%">
 
                 <ImageView
@@ -125,7 +127,8 @@
                     android:layout_centerVertical="true"
                     android:text="网络检查"
                     android:textSize="13dp"
-                    app:layout_marginLeftPercent="13%" />
+                    android:layout_marginLeft="35dp"
+                   />
 
             </androidx.percentlayout.widget.PercentRelativeLayout>
 
@@ -139,9 +142,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="19dp"
                 android:background="@drawable/button_circle_shape_item"
-                app:layout_heightPercent="22%"
+                app:layout_heightPercent="32%"
                 app:layout_marginRightPercent="1%"
-                app:layout_marginTopPercent="16%"
+                app:layout_marginTopPercent="5%"
                 app:layout_widthPercent="47%">
 
                 <ImageView
@@ -158,11 +161,158 @@
                     android:layout_centerVertical="true"
                     android:text="车辆置换"
                     android:textSize="13dp"
-                    app:layout_marginLeftPercent="13%" />
+                    android:layout_marginLeft="35dp"
+                    />
 
             </androidx.percentlayout.widget.PercentRelativeLayout>
 
         </androidx.percentlayout.widget.PercentRelativeLayout>
+     <!--  视角调整-->
+        <androidx.percentlayout.widget.PercentRelativeLayout
+            android:id="@+id/view_change"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@drawable/button_circle_shape"
+            app:layout_heightPercent="25%"
+            app:layout_marginLeftPercent="52%"
+            app:layout_marginTopPercent="5%"
+            app:layout_widthPercent="48%">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="视角调整"
+                android:textColor="#000"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <!--  视角北 : 执行所有情景 -->
+            <androidx.percentlayout.widget.PercentRelativeLayout
+                android:id="@+id/view_n"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@drawable/button_circle_shape_item"
+                app:layout_heightPercent="32%"
+                app:layout_marginLeftPercent="1%"
+                app:layout_marginTopPercent="25%"
+                app:layout_widthPercent="47%">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/n45" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="北45"
+                    android:textSize="13dp"
+                    android:layout_marginLeft="35dp" />
+
+            </androidx.percentlayout.widget.PercentRelativeLayout>
+
+            <!--  视角南 : 所有车前后移动 -->
+            <androidx.percentlayout.widget.PercentRelativeLayout
+                android:id="@+id/view_s"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_below="@id/system_check"
+                android:layout_marginTop="19dp"
+                android:background="@drawable/button_circle_shape_item"
+                app:layout_heightPercent="32%"
+                app:layout_marginLeftPercent="1%"
+                app:layout_marginTopPercent="62%"
+                app:layout_widthPercent="47%">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/s45" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="南45"
+                    android:textSize="13dp"
+                    android:layout_marginLeft="35dp" />
+
+            </androidx.percentlayout.widget.PercentRelativeLayout>
+
+
+            <!-- 东视角  : 连接中控 -->
+            <androidx.percentlayout.widget.PercentRelativeLayout
+                android:id="@+id/view_e"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="19dp"
+                android:background="@drawable/button_circle_shape_item"
+                app:layout_heightPercent="32%"
+                app:layout_marginRightPercent="1%"
+                app:layout_marginTopPercent="25%"
+                app:layout_widthPercent="47%">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/e45" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="东45"
+                    android:textSize="13dp"
+                    android:layout_marginLeft="35dp" />
+
+            </androidx.percentlayout.widget.PercentRelativeLayout>
+
+
+            <!--  西视角 -->
+            <androidx.percentlayout.widget.PercentRelativeLayout
+                android:id="@+id/view_w"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_below="@id/network_check"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="19dp"
+                android:background="@drawable/button_circle_shape_item"
+                app:layout_heightPercent="32%"
+                app:layout_marginRightPercent="1%"
+                app:layout_marginTopPercent="62%"
+                app:layout_widthPercent="47%">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/w45" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="西45"
+                    android:textSize="13dp"
+                    android:layout_marginLeft="35dp" />
+
+            </androidx.percentlayout.widget.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
+
+
 
 
         <!--  车辆控制  -->

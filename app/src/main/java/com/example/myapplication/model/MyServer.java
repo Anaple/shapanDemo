@@ -14,7 +14,7 @@ public class MyServer
 
     public static String IP   = "192.168.0.105";
     public static int    PORT = 1235;
-    public static Socket MySocket = null;
+    public static volatile Socket MySocket = null;
 
 
     //socket 协议 55 ** ** 56
