@@ -35,10 +35,23 @@ public class MainActivity extends AppCompatActivity {
     public PercentRelativeLayout NetworkCheck;
     public PercentRelativeLayout CarCheck;
 
+    public PercentRelativeLayout ViewN;
+  public PercentRelativeLayout ViewS;
+    public PercentRelativeLayout ViewE;
+    public PercentRelativeLayout ViewW;
+
+
     public ListView DramaList;
     public ListView CarControlList;
 
     public static ArrayList<ConnectedCarBean> connectedCarArr = new ArrayList<>();
+
+
+    public final static int [][] CAR_VIEW_STATIC ={{0,0,0},{3,4,5},{6,7,8},{9,10,11}};
+    public final static int viewEIndex = 1;
+    public final static int viewSIndex = 2;
+    public final static int viewWIndex = 12;
+    public final static int viewNIndex = 13;
 
 
     @SuppressLint("HandlerLeak")
@@ -193,8 +206,19 @@ public class MainActivity extends AppCompatActivity {
         CarControlList = findViewById(R.id.car_list);
         NetworkCheck = findViewById(R.id.network_check);
         CarCheck = findViewById(R.id.car_check);
+
+        ViewN =findViewById(R.id.view_n);
+        ViewS =findViewById(R.id.view_s);
+        ViewW = findViewById(R.id.view_w);
+
+        ViewE =findViewById(R.id.view_e);
+
+
+
         DramaList.setAdapter(DramaAdapter);
         CarControlList.setAdapter(CarControlAdapter);
+
+
     }
 
     //系统命令模块按钮
@@ -235,6 +259,76 @@ public class MainActivity extends AppCompatActivity {
                 callBack.CarStateOK(4, 1);
 
 
+            }
+        });
+
+        ViewE.setOnClickListener(view -> {
+                    if (MyServer.MySocket != null) {
+                        new Thread(() -> {
+
+                            try {
+
+                                MyServer.MySocket.getOutputStream().write(Agreement.getViewControl((byte) 0, (byte)viewEIndex) );
+
+                            } catch (Exception e) {
+                                Log.e("CarClick", "SOCKET", e);
+                            }
+                        }).start();
+
+                    } else {
+                        Toast.makeText(MainActivity.this, getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+                    }
+
+        });
+        ViewN.setOnClickListener(view -> {
+            if (MyServer.MySocket != null) {
+                new Thread(() -> {
+
+                    try {
+
+                        MyServer.MySocket.getOutputStream().write(Agreement.getViewControl((byte) 0, (byte)viewNIndex) );
+
+                    } catch (Exception e) {
+                        Log.e("CarClick", "SOCKET", e);
+                    }
+                }).start();
+
+            } else {
+                Toast.makeText(MainActivity.this, getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+            }
+
+        });
+        ViewW.setOnClickListener(view -> {
+            if (MyServer.MySocket != null) {
+                new Thread(() -> {
+
+                    try {
+
+                        MyServer.MySocket.getOutputStream().write(Agreement.getViewControl((byte) 0, (byte)viewWIndex) );
+
+                    } catch (Exception e) {
+                        Log.e("CarClick", "SOCKET", e);
+                    }
+                }).start();
+
+            } else {
+                Toast.makeText(MainActivity.this, getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+            }
+        });
+        ViewS.setOnClickListener(view -> {
+            if (MyServer.MySocket != null) {
+                new Thread(() -> {
+
+                    try {
+
+                        MyServer.MySocket.getOutputStream().write(Agreement.getViewControl((byte) 0, (byte)viewSIndex) );
+
+                    } catch (Exception e) {
+                        Log.e("CarClick", "SOCKET", e); }
+               }).start();
+
+            } else {
+                Toast.makeText(MainActivity.this, getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -411,7 +505,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
 
                     if (getItem(position).isCanUse()) {
-                        MyServer.MySocket.getOutputStream().write(Agreement.getViewControl((byte) (getItem(position).getCarIndex()), (byte) (4 + ((getItem(position).getCarIndex()-1) * 3))));
+                        MyServer.MySocket.getOutputStream().write(Agreement.getViewControl((byte) (getItem(position).getCarIndex()), (byte) (CAR_VIEW_STATIC[getItem(position).getCarIndex()][1])));
                     }else {
                         handler3.sendEmptyMessage(0);
                     }
@@ -426,7 +520,7 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     if (getItem(position).isCanUse()) {
-                        MyServer.MySocket.getOutputStream().write(Agreement.getViewControl((byte) (getItem(position).getCarIndex()), (byte) (5 + ((getItem(position).getCarIndex()-1) * 3))));
+                        MyServer.MySocket.getOutputStream().write(Agreement.getViewControl((byte) (getItem(position).getCarIndex()), (byte) (CAR_VIEW_STATIC[getItem(position).getCarIndex()][2])));
                     }else {
                         handler3.sendEmptyMessage(0);
                     }
@@ -440,7 +534,7 @@ public class MainActivity extends AppCompatActivity {
             ThirtyView.setOnClickListener(view13 -> new Thread(() -> {
                 try {
                     if (getItem(position).isCanUse()) {
-                        MyServer.MySocket.getOutputStream().write(Agreement.getViewControl((byte) (getItem(position).getCarIndex()), (byte) (3 + ((getItem(position).getCarIndex()-1) * 3))));
+                        MyServer.MySocket.getOutputStream().write(Agreement.getViewControl((byte) (getItem(position).getCarIndex()), (byte) (byte) (CAR_VIEW_STATIC[getItem(position).getCarIndex()][0])));
                     }else {
                         handler3.sendEmptyMessage(0);
                     }
