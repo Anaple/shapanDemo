@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     public PercentRelativeLayout CarCheck;
 
     public PercentRelativeLayout ViewN;
-  public PercentRelativeLayout ViewS;
+    public PercentRelativeLayout ViewS;
     public PercentRelativeLayout ViewE;
     public PercentRelativeLayout ViewW;
 
@@ -44,10 +44,14 @@ public class MainActivity extends AppCompatActivity {
     public ListView DramaList;
     public ListView CarControlList;
 
+
+
     public static ArrayList<ConnectedCarBean> connectedCarArr = new ArrayList<>();
 
 
+
     public final static int [][] CAR_VIEW_STATIC ={{0,0,0},{3,4,5},{6,7,8},{9,10,11}};
+    public final static boolean [] CAR_COLOR_IS_BLACK = {true,false,true,true};
     public final static int viewEIndex = 1;
     public final static int viewSIndex = 2;
     public final static int viewWIndex = 12;
@@ -84,6 +88,17 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, getResources().getString(R.string.cant_use_car) + "", Toast.LENGTH_SHORT).show();
         }
     };
+
+    @SuppressLint("HandlerLeak")
+    public  Handler handler4 = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            CarControlAdapter.notifyDataSetChanged();
+            //Toast.makeText(MainActivity.this, getResources().getString(R.string.cant_use_car) + "", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+
     //网络检查
 
     public NetWorkCallBack netWorkCallBack = new NetWorkCallBack() {
@@ -130,13 +145,14 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void dianliang(int CarIndex, int number) {
-
+            connectedCarArr.get(CarIndex).setCarBattery(number);
+            handler4.sendEmptyMessage(0);
         }
 
         @Override
         public void CarStateOK(int carIndex, int canUse) {
             if (connectedCarArr.isEmpty()) {
-                connectedCarArr.add(new ConnectedCarBean(carIndex, canUse == 0));
+                connectedCarArr.add(new ConnectedCarBean(carIndex, canUse == 0,0));
                 handler2.sendEmptyMessage(carIndex);
             } else {
                 int flag = 0;
@@ -151,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 if (flag >= connectedCarArr.size()) {
-                    connectedCarArr.add(new ConnectedCarBean(carIndex, canUse == 0));
+                    connectedCarArr.add(new ConnectedCarBean(carIndex, canUse == 0,0));
                     handler2.sendEmptyMessage(carIndex);
                 }
             }
@@ -162,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void CarStateError(int carIndex) {
             //弃用
-            if (connectedCarArr.isEmpty() || !connectedCarArr.contains(new ConnectedCarBean(carIndex, false))) {
+            if (connectedCarArr.isEmpty() || !connectedCarArr.contains(new ConnectedCarBean(carIndex, false,0))) {
                 //connectedCarArr.add(new ConnectedCarBean(carIndex, false));
             }
 
@@ -207,16 +223,20 @@ public class MainActivity extends AppCompatActivity {
         NetworkCheck = findViewById(R.id.network_check);
         CarCheck = findViewById(R.id.car_check);
 
+
         ViewN =findViewById(R.id.view_n);
         ViewS =findViewById(R.id.view_s);
         ViewW = findViewById(R.id.view_w);
-
         ViewE =findViewById(R.id.view_e);
+
+
 
 
 
         DramaList.setAdapter(DramaAdapter);
         CarControlList.setAdapter(CarControlAdapter);
+
+
 
 
     }
@@ -255,7 +275,7 @@ public class MainActivity extends AppCompatActivity {
                 //TEST
                 callBack.CarStateOK(1, 0);
                 callBack.CarStateOK(2, 0);
-                callBack.CarStateOK(3, 1);
+                callBack.CarStateOK(3, 0);
                 callBack.CarStateOK(4, 1);
 
 
@@ -472,6 +492,7 @@ public class MainActivity extends AppCompatActivity {
             return position;
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -484,10 +505,14 @@ public class MainActivity extends AppCompatActivity {
             ImageView ImgNinety = view.findViewById(R.id.img_ninety);
             ImageView ImgThirty = view.findViewById(R.id.img_thirty);
 
+
+
             PercentRelativeLayout TwoView = view.findViewById(R.id.two_view);
             PercentRelativeLayout SixView = view.findViewById(R.id.sixty);
             PercentRelativeLayout NineView = view.findViewById(R.id.ninety);
             PercentRelativeLayout ThirtyView = view.findViewById(R.id.thirty);
+
+            TextView CarBattery = view.findViewById(R.id.car_battery);
 
             TwoView.setOnClickListener(view1 -> new Thread(() -> {
                 try {
@@ -544,32 +569,35 @@ public class MainActivity extends AppCompatActivity {
                 }
             }).start());
 
-            if (getItem(position).isCanUse() && getItem(position).getCarIndex() ==1) {
-                carImg.setImageResource(R.drawable.blue_car);
-                ImgTwoD.setImageResource(R.drawable.switch_two_view);
-                ImgSixty.setImageResource(R.drawable.switch_watch_blue);
-                ImgNinety.setImageResource(R.drawable.switch_watch_blue);
-                ImgThirty.setImageResource(R.drawable.switch_two_view);
-            } else if (getItem(position).isCanUse() && getItem(position).getCarIndex() == 2) {
-                carImg.setImageResource(R.drawable.yellow_car);
-                ImgTwoD.setImageResource(R.drawable.switch_watch_yellow);
+            if(getItem(position).isCanUse() && CAR_COLOR_IS_BLACK[position]){
+                carImg.setImageResource(R.drawable.black_car);
+                ImgTwoD.setImageResource(R.drawable.i2d_icon);
                 ImgSixty.setImageResource(R.drawable.switch_watch_yellow);
                 ImgNinety.setImageResource(R.drawable.switch_watch_yellow);
                 ImgThirty.setImageResource(R.drawable.switch_watch_yellow);
-            } else if (getItem(position).isCanUse() && getItem(position).getCarIndex() == 3) {
-                carImg.setImageResource(R.drawable.green_car);
-                ImgTwoD.setImageResource(R.drawable.switch_watch_green);
-                ImgSixty.setImageResource(R.drawable.switch_watch_green);
-                ImgNinety.setImageResource(R.drawable.switch_watch_green);
-                ImgThirty.setImageResource(R.drawable.switch_watch_green);
-            } else {
+                CarBattery.setText("电量:"+getItem(position).getCarBattery()+"%");
+
+
+            }
+            else if(getItem(position).isCanUse() && !CAR_COLOR_IS_BLACK[position]){
+                carImg.setImageResource(R.drawable.white_car);
+                ImgTwoD.setImageResource(R.drawable.i2d_icon);
+                ImgSixty.setImageResource(R.drawable.switch_watch_yellow);
+                ImgNinety.setImageResource(R.drawable.switch_watch_yellow);
+                ImgThirty.setImageResource(R.drawable.switch_watch_yellow);
+                CarBattery.setText("电量:"+getItem(position).getCarBattery()+"%");
+
+
+            }else {
+
                 carImg.setImageResource(R.drawable.not_car);
-                ImgTwoD.setImageResource(R.drawable.switch_watch_not);
+                ImgTwoD.setImageResource(R.drawable.i2d_icon_disabled);
                 ImgSixty.setImageResource(R.drawable.switch_watch_not);
                 ImgNinety.setImageResource(R.drawable.switch_watch_not);
                 ImgThirty.setImageResource(R.drawable.switch_watch_not);
-            }
+                CarBattery.setText("电量:"+getItem(position).getCarBattery()+"%");
 
+            }
 
             return view;
         }

@@ -8,6 +8,15 @@
     tools:context=".MainActivity"
     android:background="@color/background"
     >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_marginLeftPercent="5%"
+        android:text="车联网先导区高铁南站规划沙盘系统"
+        android:textColor="#000"
+        android:textSize="15dp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold" />
 
 
     <!--  左侧布局  -->
@@ -17,6 +26,7 @@
         android:layout_height="1dp"
         app:layout_heightPercent="100%"
         app:layout_widthPercent="50%">
+
 
         <!--  系统命令  -->
         <androidx.percentlayout.widget.PercentRelativeLayout
@@ -125,10 +135,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="网络检查"
-                    android:textSize="13dp"
                     android:layout_marginLeft="35dp"
-                   />
+                    android:text="网络检查"
+                    android:textSize="13dp" />
 
             </androidx.percentlayout.widget.PercentRelativeLayout>
 
@@ -209,7 +218,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="北45"
+                    android:text="北45度"
                     android:textSize="13dp"
                     android:layout_marginLeft="35dp" />
 
@@ -240,7 +249,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="南45"
+                    android:text="南45度"
                     android:textSize="13dp"
                     android:layout_marginLeft="35dp" />
 
@@ -272,7 +281,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="东45"
+                    android:text="东45度"
                     android:textSize="13dp"
                     android:layout_marginLeft="35dp" />
 
@@ -305,7 +314,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="西45"
+                    android:text="西45度"
                     android:textSize="13dp"
                     android:layout_marginLeft="35dp" />
 

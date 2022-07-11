@@ -25,12 +25,11 @@
 
        <!--  剩余电量  -->
        <TextView
-           android:id="@+id/electricity"
+           android:id="@+id/car_battery"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_below="@id/car"
            android:layout_marginTop="-5dp"
-           android:text="电量99%"
            app:layout_marginLeftPercent="6.5%" />
 
        <!--  车辆控制  -->
@@ -81,7 +80,7 @@
                        android:layout_alignParentRight="true"
                        android:layout_centerVertical="true"
                        android:layout_toRightOf="@id/img_two_d"
-                       android:text="2D"
+                       android:text="全景"
                        android:textSize="14dp"
                        app:layout_marginLeftPercent="15%"
 
@@ -119,7 +118,7 @@
                        android:layout_centerVertical="true"
                        android:layout_centerHorizontal="true"
                        android:layout_toRightOf="@id/img_thirty"
-                       android:text="30"
+                       android:text="30度"
                        android:textSize="13dp"
                        app:layout_marginLeftPercent="15%" />
 
@@ -166,7 +165,7 @@
                        android:layout_height="wrap_content"
                        android:layout_centerVertical="true"
                        android:layout_toRightOf="@id/img_sixty"
-                       android:text="60"
+                       android:text="60度"
                        android:textSize="14dp"
                        app:layout_marginLeftPercent="15%" />
 
@@ -201,7 +200,7 @@
                        android:layout_height="wrap_content"
                        android:layout_centerVertical="true"
                        android:layout_toRightOf="@id/img_ninety"
-                       android:text="90"
+                       android:text="90度"
                        android:textSize="13dp"
                        app:layout_marginLeftPercent="15%" />
 

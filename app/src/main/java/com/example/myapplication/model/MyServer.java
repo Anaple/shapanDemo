@@ -12,19 +12,17 @@ import java.util.Arrays;
 public class MyServer
 {
 
-    public static String IP   = "192.168.0.105";
+    public static String IP   = "192.168.1.139";
     public static int    PORT = 1235;
     public static volatile Socket MySocket = null;
 
 
-    //socket 协议 55 ** ** 56
+    //socket 协议 55 ** ** **  56
     // 55 [2] [3] 56
 
-
-    // 第二位 定义
-    // 车号 01 02 03 04
-    // 05 电量
-    // 0A/08场景执行
+    // 0A 执行情景 0B 检查车辆 0C 检查电量 0D 切换视角 08检查情景
+    // 默认为车号
+    // 服务器信息
 
 
     // 第三位 定义
@@ -70,24 +68,22 @@ public class MyServer
                     {
                         callBack.DramaOperation(data[2]);
                     }
-
-                    // 情景
+                    // 检查情景
                     if(data[1] == 8)
                     {
-                        callBack.DramaSuccess(data[2]);
+                        callBack.DramaOperation(data[2]);
                     }
                     // 电量
-                    if(data[1] == 5)
+                    if(data[1] == 12)
                     {
                         callBack.dianliang(data[2],data[3]);
                     }
                     // 车辆检查
-                    if(data[1] == 1||data[1] == 2||data[1] == 3|| data[1]==4)
+                    if(data[1] == 11)
                     {
-                        callBack.CarStateOK(data[1],data[2]);
+                        callBack.CarStateOK(data[2],data[3]);
 
                     }
-
                     Log.i("SOCKET", Arrays.toString(data));
 
                 }
