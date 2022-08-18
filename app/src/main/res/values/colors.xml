@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#ffffff</color>
+    <color name="iconBackground">#67A4CC</color>
 
     <color name="background">#DCDCDC</color>
 

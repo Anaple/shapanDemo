@@ -11,14 +11,20 @@
         android:background="@drawable/button_circle_shape_item"
         >
 
-        <ImageView
+        <TextView
             android:id="@+id/image_ico"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:src="@drawable/drama1"
-            app:layout_heightPercent="60%"
+            app:layout_heightPercent="70%"
+            android:background="@color/iconBackground"
+            android:textColor="@color/white"
+            android:textSize="60px"
+            android:gravity="center"
+
+
             app:layout_marginLeftPercent="3%"
             app:layout_widthPercent="10%" />
 

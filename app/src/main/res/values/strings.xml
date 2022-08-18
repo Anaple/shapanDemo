@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">沙盘小车控制</string>
+    <string name="app_name">工联院沙盘小车控制</string>
     <string name="network_error">网络连接失败</string>
     <string name="network_success">网络连接成功</string>
     <string name="drama_wait">等待场景</string>

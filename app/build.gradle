@@ -6,7 +6,7 @@ android {
     compileSdk 30
 
     defaultConfig {
-        applicationId "com.example.myapplication"
+        applicationId "com.mintian.shapan.controller"
         minSdk 23
         targetSdk 30
         versionCode 1

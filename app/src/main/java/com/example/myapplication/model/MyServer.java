@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class MyServer
 {
 
-    public static String IP   = "192.168.1.139";
+    public static String IP   = "192.168.31.105";
     public static int    PORT = 1235;
     public static volatile Socket MySocket = null;
 
@@ -83,6 +83,9 @@ public class MyServer
                     {
                         callBack.CarStateOK(data[2],data[3]);
 
+                    }
+                    if(data[1] == 14){
+                        callBack.DramaFinish(data[3]);
                     }
                     Log.i("SOCKET", Arrays.toString(data));
 

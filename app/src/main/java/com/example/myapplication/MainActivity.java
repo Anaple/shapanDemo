@@ -1,11 +1,16 @@
 package com.example.myapplication;
 
+import static android.util.TypedValue.COMPLEX_UNIT_DIP;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.percentlayout.widget.PercentRelativeLayout;
 import android.annotation.SuppressLint;
 
 
+import android.media.MediaPlayer;
+import android.media.session.MediaController;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.example.myapplication.config.UIOperation;
 import com.example.myapplication.model.Agreement;
@@ -31,32 +37,18 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
 
-    public PercentRelativeLayout SystemCheck;
     public PercentRelativeLayout NetworkCheck;
     public PercentRelativeLayout CarCheck;
 
-    public PercentRelativeLayout ViewN;
-    public PercentRelativeLayout ViewS;
-    public PercentRelativeLayout ViewE;
-    public PercentRelativeLayout ViewW;
-
 
     public ListView DramaList;
-    public ListView CarControlList;
-
-
+    public VideoView dramaVideo;
+    public TextView carBattery;
 
     public static ArrayList<ConnectedCarBean> connectedCarArr = new ArrayList<>();
 
 
-
-    public final static int [][] CAR_VIEW_STATIC ={{0,0,0},{3,4,5},{6,7,8},{9,10,11}};
-    public final static boolean [] CAR_COLOR_IS_BLACK = {true,false,true,true};
-    public final static int viewEIndex = 1;
-    public final static int viewSIndex = 2;
-    public final static int viewWIndex = 12;
-    public final static int viewNIndex = 13;
-
+    public final static int [] VIDEO_SRC={R.raw.test,R.raw.test2};
 
     @SuppressLint("HandlerLeak")
     public final Handler handler = new Handler() {
@@ -68,19 +60,29 @@ public class MainActivity extends AppCompatActivity {
     };
 
     @SuppressLint("HandlerLeak")
+    public final Handler handlerVideo = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            dramaVideo.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" +VIDEO_SRC[msg.what-1] ));
+            Toast.makeText(MainActivity.this, "播放场景:"+ "" + msg.what, Toast.LENGTH_SHORT).show();
+            dramaVideo.start();
+        }
+    };
+
+    @SuppressLint("HandlerLeak")
     public Handler handler2 = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             if (msg.what > 0) {
                 //有效车辆
-                CarControlAdapter.notifyDataSetChanged();
                 Toast.makeText(MainActivity.this, getResources().getString(R.string.car_connected) + "" + msg.what, Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(MainActivity.this, getResources().getString(R.string.no_car_connected), Toast.LENGTH_SHORT).show();
             }
-
         }
     };
+
     @SuppressLint("HandlerLeak")
     public  Handler handler3 = new Handler(){
         @Override
@@ -93,8 +95,9 @@ public class MainActivity extends AppCompatActivity {
     public  Handler handler4 = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
-            CarControlAdapter.notifyDataSetChanged();
-            //Toast.makeText(MainActivity.this, getResources().getString(R.string.cant_use_car) + "", Toast.LENGTH_SHORT).show();
+            carBattery.setText(msg.what+"%");
+            carBattery.setTextSize(COMPLEX_UNIT_DIP,50);
+            Toast.makeText(MainActivity.this, msg.what+ "%", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -130,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void DramaOperation(int index) {
-            if (index == 12) {
+            if (index == 6) {
                 CurrentDrama = -1;
                 handler.sendMessage(new Message());
             } else if (index == 0) {
@@ -144,9 +147,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public void dianliang(int CarIndex, int number) {
-            connectedCarArr.get(CarIndex).setCarBattery(number);
-            handler4.sendEmptyMessage(0);
+        public void dianliang(int CarIndex, byte number) {
+            handler4.sendEmptyMessage(number);
         }
 
         @Override
@@ -179,7 +181,6 @@ public class MainActivity extends AppCompatActivity {
         public void CarStateError(int carIndex) {
             //弃用
             if (connectedCarArr.isEmpty() || !connectedCarArr.contains(new ConnectedCarBean(carIndex, false,0))) {
-                //connectedCarArr.add(new ConnectedCarBean(carIndex, false));
             }
 
         }
@@ -199,6 +200,12 @@ public class MainActivity extends AppCompatActivity {
                 handler.sendMessage(new Message());
             }
         }
+        @Override
+        public void DramaFinish(int DramaIndex){
+
+            handlerVideo.sendEmptyMessage(DramaIndex);
+
+        }
 
     };
 
@@ -210,34 +217,18 @@ public class MainActivity extends AppCompatActivity {
         UIOperation.SetFullScreen(this);
         initView();
         initOnClickListener();
-
         MyServer.BeginConnection(netWorkCallBack);
-
         MyServer.Begin(callBack);
+
     }
 
     private void initView() {
         DramaList = findViewById(R.id.drama_choose);
-        SystemCheck = findViewById(R.id.system_check);
-        CarControlList = findViewById(R.id.car_list);
+        dramaVideo = findViewById(R.id.drama_video);
         NetworkCheck = findViewById(R.id.network_check);
         CarCheck = findViewById(R.id.car_check);
-
-
-        ViewN =findViewById(R.id.view_n);
-        ViewS =findViewById(R.id.view_s);
-        ViewW = findViewById(R.id.view_w);
-        ViewE =findViewById(R.id.view_e);
-
-
-
-
-
+        carBattery = findViewById(R.id.car_battery);
         DramaList.setAdapter(DramaAdapter);
-        CarControlList.setAdapter(CarControlAdapter);
-
-
-
 
     }
 
@@ -250,9 +241,6 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(MainActivity.this, getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
                 connectedCarArr.clear();
-                CarControlAdapter.notifyDataSetChanged();
-
-
             }
         });
         CarCheck.setOnClickListener(view -> {
@@ -274,93 +262,21 @@ public class MainActivity extends AppCompatActivity {
 
                 //TEST
                 callBack.CarStateOK(1, 0);
-                callBack.CarStateOK(2, 0);
-                callBack.CarStateOK(3, 0);
-                callBack.CarStateOK(4, 1);
-
 
             }
         });
 
-        ViewE.setOnClickListener(view -> {
-                    if (MyServer.MySocket != null) {
-                        new Thread(() -> {
 
-                            try {
-
-                                MyServer.MySocket.getOutputStream().write(Agreement.getViewControl((byte) 0, (byte)viewEIndex) );
-
-                            } catch (Exception e) {
-                                Log.e("CarClick", "SOCKET", e);
-                            }
-                        }).start();
-
-                    } else {
-                        Toast.makeText(MainActivity.this, getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
-                    }
-
-        });
-        ViewN.setOnClickListener(view -> {
-            if (MyServer.MySocket != null) {
-                new Thread(() -> {
-
-                    try {
-
-                        MyServer.MySocket.getOutputStream().write(Agreement.getViewControl((byte) 0, (byte)viewNIndex) );
-
-                    } catch (Exception e) {
-                        Log.e("CarClick", "SOCKET", e);
-                    }
-                }).start();
-
-            } else {
-                Toast.makeText(MainActivity.this, getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
-            }
-
-        });
-        ViewW.setOnClickListener(view -> {
-            if (MyServer.MySocket != null) {
-                new Thread(() -> {
-
-                    try {
-
-                        MyServer.MySocket.getOutputStream().write(Agreement.getViewControl((byte) 0, (byte)viewWIndex) );
-
-                    } catch (Exception e) {
-                        Log.e("CarClick", "SOCKET", e);
-                    }
-                }).start();
-
-            } else {
-                Toast.makeText(MainActivity.this, getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
-            }
-        });
-        ViewS.setOnClickListener(view -> {
-            if (MyServer.MySocket != null) {
-                new Thread(() -> {
-
-                    try {
-
-                        MyServer.MySocket.getOutputStream().write(Agreement.getViewControl((byte) 0, (byte)viewSIndex) );
-
-                    } catch (Exception e) {
-                        Log.e("CarClick", "SOCKET", e); }
-               }).start();
-
-            } else {
-                Toast.makeText(MainActivity.this, getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 
     //情景部分
-    public static int CurrentDrama = 12;
+    public static int CurrentDrama = 6;
     // 情景列表
     public BaseAdapter DramaAdapter = new BaseAdapter() {
         @Override
         public int getCount() {
-            return 12;
+            return CurrentDrama;
         }
 
         @Override
@@ -378,28 +294,26 @@ public class MainActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             @SuppressLint("ViewHolder")
             View view = View.inflate(MainActivity.this, R.layout.item_drama, null);
-            ImageView img = view.findViewById(R.id.image_ico);
+            TextView img = view.findViewById(R.id.image_ico);
             ImageView OnOff = view.findViewById(R.id.on_off);
             TextView dramaContent = view.findViewById(R.id.drama_content);
             TextView drama = view.findViewById(R.id.drama);
-            if (position <= CurrentDrama) {
-                OnOff.setImageResource(R.drawable.off);
-                DramaAdapter.notifyDataSetChanged();
-            }
+
 
             OnOff.setOnClickListener(v -> {
-
-                if (MyServer.MySocket != null) //&& position>CurrentDrama)
+                if (MyServer.MySocket != null)
                 {
                     CurrentDrama = position;
-                    DramaAdapter.notifyDataSetChanged();
+
+                   // DramaAdapter.notifyDataSetChanged();
 
                     new Thread(() -> {
                         try {
                             byte[] data = Agreement.getDrama((byte) (position + 1));
                             MyServer.MySocket.getOutputStream().write(data);
-                            CurrentDrama = 12;
-                            DramaAdapter.notifyDataSetChanged();
+
+                            CurrentDrama = 6;
+                          //  DramaAdapter.notifyDataSetChanged();
                         } catch (Exception e) {
                             Log.e("SYSTEM_CLICK", "SOCKET", e);
                         }
@@ -410,195 +324,37 @@ public class MainActivity extends AppCompatActivity {
             });
             switch (position) {
                 case 0:
-                    img.setImageResource(R.drawable.drama1);
-                    drama.setText("场景1：道路危险状况提示");
-                    dramaContent.setText("蓝色主车停车场起点。达到路口红色点位开启预警提醒（同时开启雨雾模拟），车辆驶过湿滑路段，经过绿色点位场景结束。");
+                    img.setText("A1");
+                    drama.setText("场景1：灌装测试");
+                    dramaContent.setText("车辆停在起点车间位置，展示车辆下线灌装场景。沙盘场景位置建筑为车间工厂生产线模型，安装场景名称灯牌，车辆位置安装灯带，配合灌装过程变化灯光效果。");
                     break;
                 case 1:
-                    img.setImageResource(R.drawable.drama2);
-                    drama.setText("场景2：绿波车速引导");
-                    dramaContent.setText("蓝色主车继续行驶。达到路口红色点位开启绿波车速引导提醒（提示当前红绿灯状态），车辆根据红绿灯状态驶过路口（红灯减速停止、绿灯正常通行），经过绿色点位场景结束。");
+                    img.setText("A2");
+                    drama.setText("场景2：车人交互场景");
+                    dramaContent.setText("新车下线交到用户使用。车辆从车间蓝色点位出发，驶向场景2，停在场景2展示（黄色点）位置，触发平台端动画效果。沙盘场景位置建筑为住宅区模型，路端设立假人模型，安装场景名称灯牌。");
                     break;
                 case 2:
-                    img.setImageResource(R.drawable.drama3);
-                    drama.setText("场景3：车内标牌");
-                    dramaContent.setText("蓝色主车继续行驶。达到路口红色点位开启车内标牌提醒，车辆驶过路口，经过绿色点位场景结束。");
+                    img.setText("A3");
+                    drama.setText("场景3：车内场景");
+                    dramaContent.setText("车辆从场景2蓝色点位出发，驶向场景3，通过路口停在场景3展示（黄色点）位置（靠近沙盘边缘，方便人员操作），触发平台端动画效果，展示车内CAN过程。沙盘场景位置建筑为4S店模型，安装场景名称灯牌。");
                     break;
                 case 3:
-                    img.setImageResource(R.drawable.drama4);
-                    drama.setText("场景4：弱势交通参与者碰撞预警");
-                    dramaContent.setText("蓝色主车继续行驶。达到路口红色点位开启弱势交通参与者碰撞预警提示（同时启动假人装置），车辆减速慢行停止到假人前，待假人复原，继续正常驶过路段，经过绿色点位场景结束。");
+                    img.setText("A4");
+                    drama.setText("场景4：车际交互场景");
+                    dramaContent.setText("车辆从场景3蓝色点位出发，驶向场景4，通过路口标志点（绿色）时，触发红绿灯预警动画（车路通信，提前告知路侧设备状态），车辆驶向黄色点位置（红灯停车、绿灯正常驶过路口）。沙盘安装场景名称灯牌。");
                     break;
                 case 4:
-                    img.setImageResource(R.drawable.drama5);
-                    drama.setText("场景5：闯红灯预警");
-                    dramaContent.setText("蓝色主车继续行驶。达到路口红色点位将前方路口路灯置为红灯（确保前方为红灯），开启闯红灯预警提示，车辆减速慢行停止，待路灯变绿，车辆继续正常驶过路口，经过绿色点位场景结束。");
+                    img.setText("A5");
+                    drama.setText("场景5：车际交互场景（车车通信）");
+                    dramaContent.setText("车辆从场景4继续行驶，驶向场景5，通过路口标志点（绿色）时，触发车车通信交互动画（与前方故障车通信，提前前方故障车辆，判断是否影响当前行驶路线），实际为同向邻车道，对当前路线无影响，车辆正常继续行驶。沙盘安装场景名称灯牌。");
                     break;
                 case 5:
-                    img.setImageResource(R.drawable.drama7);
-                    drama.setText("场景6：限速预警");
-                    dramaContent.setText("蓝色主车继续行驶。达到路口红色点位驶入南站辅路，开启限速预警提示（限速30），车辆减速慢行驶过路段，经过绿色点位场景结束。");
-                    break;
-                case 6:
-                    img.setImageResource(R.drawable.drama8);
-                    drama.setText("场景7：左转辅助");
-                    dramaContent.setText("蓝色主车停车场起点。达到路口红色点位开启预警提醒（同时开启雨雾模拟），车辆驶过湿滑路段，经过绿色点位场景结束。");
-                    break;
-                case 7:
-                    img.setImageResource(R.drawable.drama9);
-                    drama.setText("场景8：交叉口碰撞预警");
-                    dramaContent.setText("蓝色主车、绿色副车1继续行驶，达到路口红色点位开启交叉口碰撞预警，两辆车交叉驶入路口，副车1停在蓝色点位等待主车通过绿色点位，启动副车1驶回到最初位置。");
-                    break;
-                case 8:
-                    img.setImageResource(R.drawable.drama10);
-                    drama.setText("场景9：异常车辆提醒");
-                    dramaContent.setText("蓝色主车继续行驶，达到路口红色点位开启异常车辆提醒，前方为预设好的静止车辆副车2，主车达到绿色点位停止在副车2后，场景结束。");
-                    break;
-                case 9:
-                    img.setImageResource(R.drawable.drama11);
-                    drama.setText("场景10：前向碰撞预警");
-                    dramaContent.setText("启动蓝色主车和副车2继续行驶，开启前向碰撞预警提醒，副车2经过蓝色点位时关闭提醒。");
-                    break;
-                case 10:
-                    img.setImageResource(R.drawable.drama12);
-                    drama.setText("场景11：紧急制动预警");
-                    dramaContent.setText("启动蓝色主车和副车2继续行驶，副车2在前，达到蓝色点位停止，主车开启紧急制动预警，主车减速停止达到绿色点位停止在副车2后，场景结束。");
-                    break;
-                case 11:
-                    img.setImageResource(R.drawable.drama6);
-                    drama.setText("场景12：近场支付");
-                    dramaContent.setText("启动蓝色主车和副车2继续行驶，副车2在前驶回最初位置，主车驶向停车场，达到停车场门口开启闸机和近场支付场景动画，达到停车位，场景结束。");
+                    img.setText("A6");
+
+                    drama.setText("场景6：车云OTA场景");
+                    dramaContent.setText("车辆从场景5继续行驶，驶向场景6达到黄色点位停止，触发场景动画效果。沙盘建筑场景为停车场（停车场出入口可安装自动闸机，进出不停车自动抬杆），车辆停在车场停车位（车位可安装LED灯带，显示停车位置），安装场景名称灯牌。");
                     break;
             }
-            return view;
-        }
-    };
-
-    // 车辆控制
-    public BaseAdapter CarControlAdapter = new BaseAdapter() {
-
-        @Override
-        public int getCount() {
-            return connectedCarArr.size();
-        }
-
-        @Override
-        public ConnectedCarBean getItem(int position) {
-            return connectedCarArr.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @SuppressLint("SetTextI18n")
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            @SuppressLint("ViewHolder")
-
-            View view = View.inflate(MainActivity.this, R.layout.item_car, null);
-            ImageView carImg = view.findViewById(R.id.car);
-            ImageView ImgTwoD = view.findViewById(R.id.img_two_d);
-            ImageView ImgSixty = view.findViewById(R.id.img_sixty);
-            ImageView ImgNinety = view.findViewById(R.id.img_ninety);
-            ImageView ImgThirty = view.findViewById(R.id.img_thirty);
-
-
-
-            PercentRelativeLayout TwoView = view.findViewById(R.id.two_view);
-            PercentRelativeLayout SixView = view.findViewById(R.id.sixty);
-            PercentRelativeLayout NineView = view.findViewById(R.id.ninety);
-            PercentRelativeLayout ThirtyView = view.findViewById(R.id.thirty);
-
-            TextView CarBattery = view.findViewById(R.id.car_battery);
-
-            TwoView.setOnClickListener(view1 -> new Thread(() -> {
-                try {
-                    if (getItem(position).isCanUse()) {
-                        MyServer.MySocket.getOutputStream().write(Agreement.getViewControl((byte) (getItem(position).getCarIndex()), (byte) 0));
-                    }
-
-                } catch (Exception e) {
-                    Log.e("CAR_CLICK", "SOCKET", e);
-                }
-
-            }).start());
-
-            SixView.setOnClickListener(view11 -> new Thread(() -> {
-                try {
-
-                    if (getItem(position).isCanUse()) {
-                        MyServer.MySocket.getOutputStream().write(Agreement.getViewControl((byte) (getItem(position).getCarIndex()), (byte) (CAR_VIEW_STATIC[getItem(position).getCarIndex()][1])));
-                    }else {
-                        handler3.sendEmptyMessage(0);
-                    }
-
-                } catch (Exception e) {
-                    Log.e("CAR_CLICK", "SOCKET", e);
-                }
-
-            }).start());
-
-            NineView.setOnClickListener(view12 -> new Thread(() -> {
-
-                try {
-                    if (getItem(position).isCanUse()) {
-                        MyServer.MySocket.getOutputStream().write(Agreement.getViewControl((byte) (getItem(position).getCarIndex()), (byte) (CAR_VIEW_STATIC[getItem(position).getCarIndex()][2])));
-                    }else {
-                        handler3.sendEmptyMessage(0);
-                    }
-
-                } catch (Exception e) {
-                    Log.e("CAR_CLICK", "SOCKET", e);
-                }
-
-            }).start());
-
-            ThirtyView.setOnClickListener(view13 -> new Thread(() -> {
-                try {
-                    if (getItem(position).isCanUse()) {
-                        MyServer.MySocket.getOutputStream().write(Agreement.getViewControl((byte) (getItem(position).getCarIndex()), (byte) (byte) (CAR_VIEW_STATIC[getItem(position).getCarIndex()][0])));
-                    }else {
-                        handler3.sendEmptyMessage(0);
-                    }
-
-                } catch (Exception e) {
-                    Log.e("CAR_CLICK", "SOCKET", e);
-                }
-            }).start());
-
-            if(getItem(position).isCanUse() && CAR_COLOR_IS_BLACK[position]){
-                carImg.setImageResource(R.drawable.black_car);
-                ImgTwoD.setImageResource(R.drawable.i2d_icon);
-                ImgSixty.setImageResource(R.drawable.switch_watch_yellow);
-                ImgNinety.setImageResource(R.drawable.switch_watch_yellow);
-                ImgThirty.setImageResource(R.drawable.switch_watch_yellow);
-                CarBattery.setText("电量:"+getItem(position).getCarBattery()+"%");
-
-
-            }
-            else if(getItem(position).isCanUse() && !CAR_COLOR_IS_BLACK[position]){
-                carImg.setImageResource(R.drawable.white_car);
-                ImgTwoD.setImageResource(R.drawable.i2d_icon);
-                ImgSixty.setImageResource(R.drawable.switch_watch_yellow);
-                ImgNinety.setImageResource(R.drawable.switch_watch_yellow);
-                ImgThirty.setImageResource(R.drawable.switch_watch_yellow);
-                CarBattery.setText("电量:"+getItem(position).getCarBattery()+"%");
-
-
-            }else {
-
-                carImg.setImageResource(R.drawable.not_car);
-                ImgTwoD.setImageResource(R.drawable.i2d_icon_disabled);
-                ImgSixty.setImageResource(R.drawable.switch_watch_not);
-                ImgNinety.setImageResource(R.drawable.switch_watch_not);
-                ImgThirty.setImageResource(R.drawable.switch_watch_not);
-                CarBattery.setText("电量:"+getItem(position).getCarBattery()+"%");
-
-            }
-
             return view;
         }
     };

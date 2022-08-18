@@ -9,7 +9,7 @@ public interface CallBack {
     void DramaOperation(int index);
 
     // 电量
-    void dianliang(int CarIndex,int number);
+    void dianliang(int CarIndex,byte number);
 
     // 检查车辆正常
     void CarStateOK(int carIndex,int canUse);
@@ -17,8 +17,11 @@ public interface CallBack {
     // 检查车辆错误
     void CarStateError(int carIndex);
 
+    void DramaSuccess(int dramaIndex);
+
     //
-    void DramaSuccess(int carIndex);
+    void DramaFinish(int dramaIndex);
+
 
 
 
