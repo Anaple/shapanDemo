@@ -12,13 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_marginLeftPercent="5%"
-        android:text="工联院场景沙盘"
+        android:text=""
         android:textColor="#000"
-        android:textSize="15dp"
+        android:textSize="16dp"
         android:layout_marginTop="10dp"
         android:textStyle="bold" />
-
-
     <!--  左侧布局  -->
     <androidx.percentlayout.widget.PercentRelativeLayout
         android:id="@+id/left"
@@ -29,12 +27,13 @@
 
 
         <!--  系统命令  -->
+
         <androidx.percentlayout.widget.PercentRelativeLayout
             android:id="@+id/system_control"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="@drawable/button_circle_shape"
-            app:layout_heightPercent="25%"
+            app:layout_heightPercent="20%"
             app:layout_marginLeftPercent="3%"
             app:layout_marginTopPercent="5%"
             app:layout_widthPercent="46%">
@@ -42,25 +41,26 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="系统命令"
+                android:layout_marginTop="10dp"
+                android:text="系统控制"
                 android:textColor="#000"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_marginLeftPercent="5%" />
-
-
 
             <!--  车辆检查 : 所有车前后移动 -->
             <androidx.percentlayout.widget.PercentRelativeLayout
                 android:id="@+id/car_check"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                app:layout_marginTopPercent="25%"
-
-                android:layout_marginTop="19dp"
-                android:background="@drawable/button_circle_shape_item"
-                app:layout_heightPercent="62%"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/button_circle_shape_item_blue"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:layout_heightPercent="32%"
                 app:layout_marginLeftPercent="1%"
+                app:layout_marginTopPercent="40%"
+
 
                 app:layout_widthPercent="47%">
 
@@ -78,7 +78,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="35dp"
                     android:text="车辆检查"
-                    android:textSize="13dp" />
+                    android:textColor="#1890ff"
+                    android:textSize="16dp" />
 
             </androidx.percentlayout.widget.PercentRelativeLayout>
 
@@ -86,14 +87,16 @@
             <!--  网络检查 : 连接中控 -->
             <androidx.percentlayout.widget.PercentRelativeLayout
                 android:id="@+id/network_check"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="19dp"
-                android:background="@drawable/button_circle_shape_item"
-                app:layout_heightPercent="62%"
+                android:background="@drawable/button_circle_shape_item_blue"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:layout_heightPercent="32%"
                 app:layout_marginRightPercent="1%"
-                app:layout_marginTopPercent="25%"
+                app:layout_marginTopPercent="40%"
                 app:layout_widthPercent="47%">
 
                 <ImageView
@@ -110,21 +113,20 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="35dp"
                     android:text="网络检查"
-                    android:textSize="13dp" />
+                    android:textColor="#1890ff"
+                    android:textSize="16dp" />
 
             </androidx.percentlayout.widget.PercentRelativeLayout>
 
 
-
-
         </androidx.percentlayout.widget.PercentRelativeLayout>
-     <!--  视角调整-->
+        <!--  视角调整-->
         <androidx.percentlayout.widget.PercentRelativeLayout
             android:id="@+id/view_change"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="@drawable/button_circle_shape"
-            app:layout_heightPercent="25%"
+            app:layout_heightPercent="20%"
             app:layout_marginLeftPercent="52%"
             app:layout_marginTopPercent="5%"
             app:layout_widthPercent="48%">
@@ -134,45 +136,113 @@
                 android:layout_height="wrap_content"
                 android:text="车辆状态"
                 android:textColor="#000"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                app:layout_marginLeftPercent="5%"
+                android:lastBaselineToBottomHeight="@dimen/cardview_default_elevation"
+                />
+
 
             <androidx.percentlayout.widget.PercentRelativeLayout
                 android:id="@+id/temp1"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/button_circle_shape">
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+
+                android:layout_marginTop="19dp"
+                android:background="@drawable/button_circle_shape_item"
+                app:layout_heightPercent="80%"
+                app:layout_marginRightPercent="1%"
+                app:layout_marginTopPercent="40%"
+                app:layout_widthPercent="47%">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="在线状态"
+                    android:textSize="8dp"
+                    app:layout_marginLeftPercent="15%"
+                    />
 
                 <!--  车辆图标  -->
                 <ImageView
                     android:id="@+id/car_icon"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:scaleType="fitStart"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:src="@drawable/black_car"
                     app:layout_heightPercent="85%"
-                    app:layout_marginLeftPercent="1%"
-                    app:layout_marginTopPercent="4%" />
+                    app:layout_marginLeftPercent="8%"
+                    android:layout_marginTop="10dp"
 
+                    />
+                <!--  连接状态  -->
+                <TextView
+                    android:id="@+id/car_connect_ic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="60dp"
+                    android:text="."
+                    android:textSize="40dp"
+                    android:textColor="@color/gray"
+
+
+                    />
+                <TextView
+                    android:id="@+id/car_connect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="70dp"
+                    android:text="@string/no_connect"
+                    android:textSize="12dp"
+                    app:layout_marginTopPercent="47%"
+
+                    />
+            </androidx.percentlayout.widget.PercentRelativeLayout>
+
+            <androidx.percentlayout.widget.PercentRelativeLayout
+                android:id="@+id/temp2"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="19dp"
+                android:background="@drawable/button_circle_shape_item"
+                app:layout_heightPercent="80%"
+                app:layout_marginRightPercent="1%"
+                app:layout_marginTopPercent="40%"
+                app:layout_widthPercent="47%"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="电池电量"
+                    android:textSize="8dp"
+                    app:layout_marginLeftPercent="15%"
+                    />
+
+
+                <!--  车辆图标  -->
+                <ImageView
+                    android:id="@+id/battery_icon"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/dianchi"
+                    app:layout_heightPercent="85%"
+                    app:layout_marginLeftPercent="15%"
+                    android:layout_marginTop="10dp"
+                    />
                 <!--  剩余电量  -->
                 <TextView
                     android:id="@+id/car_battery"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/car"
-                    android:layout_marginLeft="130dp"
-                    android:text="检查网络"
-                    android:textColor="@color/black"
-                    android:textSize="25dp"
+                    android:layout_marginLeft="70dp"
+                    android:text="@string/no_connect"
+                    android:textSize="12dp"
+                    app:layout_marginTopPercent="45%"
 
                     />
             </androidx.percentlayout.widget.PercentRelativeLayout>
-
-
         </androidx.percentlayout.widget.PercentRelativeLayout>
-
-
 
 
         <!--  情景描述  -->
@@ -180,8 +250,8 @@
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_below="@+id/system_control"
-            android:background="@drawable/button_circle_shape_item"
-            app:layout_heightPercent="65%"
+            android:background="@drawable/button_circle_shape"
+            app:layout_heightPercent="70%"
             app:layout_marginBottomPercent="2%"
             app:layout_marginLeftPercent="3%"
             app:layout_marginTopPercent="3%"
@@ -191,19 +261,42 @@
                 android:id="@+id/car_control"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="情景描述"
+                app:layout_marginLeftPercent="2%"
+                android:layout_marginTop="10dp"
+                android:text="方案描述"
                 android:textColor="#000"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textStyle="bold" />
 
-            <VideoView
-                android:id="@+id/drama_video"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginTop="30dp"
-                >
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:background="@drawable/button_circle_shape_item"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="0dp">
+                <TextView
+                    android:id="@+id/drama_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="18dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/black"
+                    />
+                <ImageView
+                    android:id="@+id/drama_picture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="350dp"
+                    android:src="@drawable/deafult_drama"
+                    android:layout_marginTop="130dp"
 
-            </VideoView>
+
+                    />
+
+
+            </androidx.cardview.widget.CardView>
 
 
         </androidx.percentlayout.widget.PercentRelativeLayout>
@@ -232,13 +325,25 @@
             app:layout_marginTopPercent="5%"
             app:layout_widthPercent="97%">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_marginLeftPercent="2%"
+                android:text="车联网密码应用测试床"
+                android:textColor="#000"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
             <!--  情景选择  -->
             <ListView
                 android:id="@+id/drama_choose"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="50dp"
                 android:divider="#ffffff"
-                android:dividerHeight="0dp" />
+                android:dividerHeight="0dp"
+                android:listSelector="@color/white" />
 
         </androidx.percentlayout.widget.PercentRelativeLayout>
 

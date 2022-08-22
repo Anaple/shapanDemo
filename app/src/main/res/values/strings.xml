@@ -1,10 +1,20 @@
 <resources>
-    <string name="app_name">工联院沙盘小车控制</string>
+    <string name="app_name">车联网控制床</string>
     <string name="network_error">网络连接失败</string>
     <string name="network_success">网络连接成功</string>
     <string name="drama_wait">等待场景</string>
     <string name="no_car_connected">没有车被连接</string>
     <string name="car_connected">已连接车:</string>
     <string name="cant_use_car">该车暂时无法使用</string>
-
+    <string name="no_connect">未连接</string>
+    <string name="connected">在线</string>
+    <string name="battery_deafult">00%</string>
+    <string name="deafult_text">车联网密码应用安全测试床，涵盖灌装、车内、车人、车际、车云五个车联网应用场景，并对每个场景进行展示验证，并以此帮助车联网企业完成升级建设，推进安全检测防御的规范化方法，打造智能安全可信的车联网密码应用方案。</string>
+    <string name="drama_text_1">在PKI体系结构中生成私钥和CSR，加上在处理过程中灌装设备和ECU之间的数据传输进行完整性验证，通过密钥和完整性验证，车机系统将主动识别加载的灌装系统是否为授权访问，根据验证结果，车机端将限制灌装系统的接入访问。</string>
+    <string name="drama_text_2">在人员利用手机数字钥匙控车的场景中，通过基于白盒，PKI证书，签名加密等密码技术，实现移动端-云后台-车辆端交互过程中相互进行身份认证、密钥交换和消息验证，保障交互过程中数字钥匙的安全下发、控制指令的安全接收、控制指令的机密性和完整性认证。</string>
+    <string name="drama_text_3">车内测试床子方案聚焦车联网下车辆内部总线与各终端设备之间的应用场景。在车内网络的数据链路层加入CANSec层，对数据的保密性与完整性进行保护，防止整个系统受到攻击，从而完成认证和加密。</string>
+    <string name="drama_text_4">车际测试床聚焦车联网V2X应用场景，基于PKI进行车际通讯认证，利用轻量级证书体系技术进行车际证书应用管理并实现安全保护。本场景中车辆通过与路侧RSU通过数字证书进行身份认证和消息保护，车端根据接收的交通信号灯信息实现路口安全通行。</string>
+    <string name="drama_text_5">车际测试床聚焦车联网V2X应用场景，基于PKI进行车际通讯认证，利用轻量级证书体系技术进行车际证书应用管理并实现安全保护。本场景中车辆通过与故障车OBU通过数字证书进行身份认证和消息保护，车端根据接收的V2X 消息实现异常车辆的碰撞预警提示。</string>
+    <string name="drama_text_6">车云测试床聚焦车联网应用场景下车辆与云平台之间通信时的安全性，通过采用PKI体系、对称/非对称密码算法、数字证书应用等密码技术实现实现车端与云平台间的双向身份认证和信息的加密。
+</string>
 </resources>

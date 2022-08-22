@@ -8,6 +8,8 @@ import androidx.percentlayout.widget.PercentRelativeLayout;
 import android.annotation.SuppressLint;
 
 
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.media.session.MediaController;
 import android.net.Uri;
@@ -18,12 +20,15 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.example.myapplication.bean.DramaBean;
 import com.example.myapplication.config.UIOperation;
 import com.example.myapplication.model.Agreement;
 import com.example.myapplication.model.MyServer;
@@ -42,16 +47,41 @@ public class MainActivity extends AppCompatActivity {
 
 
     public ListView DramaList;
-    public VideoView dramaVideo;
+    public ImageView dramaImg;
+    public TextView dramaText;
     public TextView carBattery;
+    public TextView carConnect;
+    public TextView carConnectIcon;
 
     public static ArrayList<ConnectedCarBean> connectedCarArr = new ArrayList<>();
+    public static ArrayList<DramaBean> dramaBeans = new ArrayList<>();
 
 
-    public final static int [] VIDEO_SRC={R.raw.test,R.raw.test2};
+    public void initDramaBeans(){
 
+        dramaBeans.add(new DramaBean(R.drawable.drama_a1_icon,"车联网密码应用测试床：灌装测试床",false,false));
+        dramaBeans.add(new DramaBean(R.drawable.drama_a2_icon,"车联网密码应用测试床：车人测试床",false,false));
+        dramaBeans.add(new DramaBean(R.drawable.drama_a3_icon,"车联网密码应用测试床：车内测试床",false,false));
+        dramaBeans.add(new DramaBean(R.drawable.drama_a4_icon,"车联网密码应用测试床：车际测试床-车路通信",false,false));
+        dramaBeans.add(new DramaBean(R.drawable.drama_a5_icon,"车联网密码应用测试床：车际测试床-车车通信",false,false));
+        dramaBeans.add(new DramaBean(R.drawable.drama_a6_icon,"车联网密码应用测试床：车云测试床",false,false));
+    }
+
+
+    public final static int [] PIC_SRC={R.drawable.deafult_drama,R.drawable.drama_pic_1,R.drawable.drama_pic_2,R.drawable.drama_pic_3,R.drawable.drama_pic_4,R.drawable.drama_pic_5,R.drawable.drama_pic_6};
+    public final static int [] STRING_SRC = {R.string.deafult_text,R.string.drama_text_1,R.string.drama_text_2,R.string.drama_text_3,R.string.drama_text_4,R.string.drama_text_5,R.string.drama_text_6};
     @SuppressLint("HandlerLeak")
     public final Handler handler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            dramaBeans.clear();
+            initDramaBeans();
+            DramaAdapter.notifyDataSetChanged();
+        }
+    };
+
+    public final Handler handlerDrama = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
@@ -64,18 +94,24 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
-            dramaVideo.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" +VIDEO_SRC[msg.what-1] ));
-            Toast.makeText(MainActivity.this, "播放场景:"+ "" + msg.what, Toast.LENGTH_SHORT).show();
-            dramaVideo.start();
+            dramaText.setText(STRING_SRC[msg.what]);
+            dramaImg.setImageResource(PIC_SRC[msg.what]);
+ //           Toast.makeText(MainActivity.this, "场景:"+ "" + msg.what, Toast.LENGTH_SHORT).show();
+//            dramaVideo.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" +VIDEO_SRC[msg.what-1] ));
+//            Toast.makeText(MainActivity.this, "播放场景:"+ "" + msg.what, Toast.LENGTH_SHORT).show();
+//            dramaVideo.start();
         }
     };
 
     @SuppressLint("HandlerLeak")
     public Handler handler2 = new Handler() {
+        @SuppressLint("ResourceAsColor")
         @Override
         public void handleMessage(@NonNull Message msg) {
             if (msg.what > 0) {
                 //有效车辆
+                carConnectIcon.setTextColor(getResources().getColor(R.color.start));
+                carConnect.setText(R.string.connected);
                 Toast.makeText(MainActivity.this, getResources().getString(R.string.car_connected) + "" + msg.what, Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(MainActivity.this, getResources().getString(R.string.no_car_connected), Toast.LENGTH_SHORT).show();
@@ -96,8 +132,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void handleMessage(@NonNull Message msg) {
             carBattery.setText(msg.what+"%");
-            carBattery.setTextSize(COMPLEX_UNIT_DIP,50);
-            Toast.makeText(MainActivity.this, msg.what+ "%", Toast.LENGTH_SHORT).show();
+           // carBattery.setTextSize(COMPLEX_UNIT_DIP,24);
+            //Toast.makeText(MainActivity.this, msg.what+ "%", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -120,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void error() {
             Toast.makeText(MainActivity.this, getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+            carBattery.setText(getResources().getString(R.string.network_error));
         }
     };
 
@@ -224,11 +261,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         DramaList = findViewById(R.id.drama_choose);
-        dramaVideo = findViewById(R.id.drama_video);
+        //dramaVideo = findViewById(R.id.drama_video);
         NetworkCheck = findViewById(R.id.network_check);
         CarCheck = findViewById(R.id.car_check);
         carBattery = findViewById(R.id.car_battery);
+        carConnectIcon = findViewById(R.id.car_connect_ic);
+        carConnect =findViewById(R.id.car_connect);
+        dramaImg = findViewById(R.id.drama_picture);
+        dramaText = findViewById(R.id.drama_text);
         DramaList.setAdapter(DramaAdapter);
+        initDramaBeans();
+        dramaText.setText(R.string.deafult_text);
 
     }
 
@@ -271,90 +314,97 @@ public class MainActivity extends AppCompatActivity {
 
 
     //情景部分
-    public static int CurrentDrama = 6;
+    public  static int CurrentDrama = dramaBeans.size();
     // 情景列表
     public BaseAdapter DramaAdapter = new BaseAdapter() {
         @Override
         public int getCount() {
-            return CurrentDrama;
+            return dramaBeans.size();
         }
 
         @Override
-        public Object getItem(int position) {
-            return null;
+        public DramaBean getItem(int position) {
+            return dramaBeans.get(position);
         }
 
         @Override
         public long getItemId(int position) {
-            return 0;
+            return position;
         }
 
-        @SuppressLint("SetTextI18n")
+        @SuppressLint({"SetTextI18n", "ResourceType"})
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             @SuppressLint("ViewHolder")
             View view = View.inflate(MainActivity.this, R.layout.item_drama, null);
-            TextView img = view.findViewById(R.id.image_ico);
+            ImageView img = view.findViewById(R.id.image_ico);
             ImageView OnOff = view.findViewById(R.id.on_off);
-            TextView dramaContent = view.findViewById(R.id.drama_content);
             TextView drama = view.findViewById(R.id.drama);
 
-
             OnOff.setOnClickListener(v -> {
+
                 if (MyServer.MySocket != null)
                 {
-                    CurrentDrama = position;
-
-                   // DramaAdapter.notifyDataSetChanged();
 
                     new Thread(() -> {
                         try {
                             byte[] data = Agreement.getDrama((byte) (position + 1));
                             MyServer.MySocket.getOutputStream().write(data);
-
                             CurrentDrama = 6;
-                          //  DramaAdapter.notifyDataSetChanged();
+
+                            if(!getItem(position).isStop&&!getItem(position).isPending) {
+                                for (int i = 0; i < CurrentDrama; i++) {
+                                    if (i == position) {
+                                        getItem(position).isStop = true;
+                                        getItem(position).isPending = false;
+                                    } else {
+                                        getItem(i).isStop = false;
+                                        getItem(i).isPending = true;
+                                    }
+
+                                }
+                                handlerDrama.sendMessage(new Message());
+
+                            }else {
+                                Toast.makeText(MainActivity.this, getResources().getString(R.string.drama_wait), Toast.LENGTH_SHORT).show();
+                            }
+
                         } catch (Exception e) {
                             Log.e("SYSTEM_CLICK", "SOCKET", e);
                         }
                     }).start();
                 } else {
-                    Toast.makeText(MainActivity.this, getResources().getString(R.string.drama_wait), Toast.LENGTH_SHORT).show();
+                    if(!getItem(position).isStop&&!getItem(position).isPending){
+                        CurrentDrama = 6;
+                        for (int i=0 ; i<CurrentDrama ;i++){
+                            if(i==position){
+                                getItem(position).isStop = true;
+                                getItem(position).isPending =false;
+                            }else {
+                                getItem(i).isStop =false;
+                                getItem(i).isPending = true;
+                            }
+                        }
+                        DramaAdapter.notifyDataSetChanged();
+                        Toast.makeText(MainActivity.this, getResources().getString(R.string.drama_wait), Toast.LENGTH_SHORT).show();
+                    }else {
+
+                    }
+
                 }
             });
-            switch (position) {
-                case 0:
-                    img.setText("A1");
-                    drama.setText("场景1：灌装测试");
-                    dramaContent.setText("车辆停在起点车间位置，展示车辆下线灌装场景。沙盘场景位置建筑为车间工厂生产线模型，安装场景名称灯牌，车辆位置安装灯带，配合灌装过程变化灯光效果。");
-                    break;
-                case 1:
-                    img.setText("A2");
-                    drama.setText("场景2：车人交互场景");
-                    dramaContent.setText("新车下线交到用户使用。车辆从车间蓝色点位出发，驶向场景2，停在场景2展示（黄色点）位置，触发平台端动画效果。沙盘场景位置建筑为住宅区模型，路端设立假人模型，安装场景名称灯牌。");
-                    break;
-                case 2:
-                    img.setText("A3");
-                    drama.setText("场景3：车内场景");
-                    dramaContent.setText("车辆从场景2蓝色点位出发，驶向场景3，通过路口停在场景3展示（黄色点）位置（靠近沙盘边缘，方便人员操作），触发平台端动画效果，展示车内CAN过程。沙盘场景位置建筑为4S店模型，安装场景名称灯牌。");
-                    break;
-                case 3:
-                    img.setText("A4");
-                    drama.setText("场景4：车际交互场景");
-                    dramaContent.setText("车辆从场景3蓝色点位出发，驶向场景4，通过路口标志点（绿色）时，触发红绿灯预警动画（车路通信，提前告知路侧设备状态），车辆驶向黄色点位置（红灯停车、绿灯正常驶过路口）。沙盘安装场景名称灯牌。");
-                    break;
-                case 4:
-                    img.setText("A5");
-                    drama.setText("场景5：车际交互场景（车车通信）");
-                    dramaContent.setText("车辆从场景4继续行驶，驶向场景5，通过路口标志点（绿色）时，触发车车通信交互动画（与前方故障车通信，提前前方故障车辆，判断是否影响当前行驶路线），实际为同向邻车道，对当前路线无影响，车辆正常继续行驶。沙盘安装场景名称灯牌。");
-                    break;
-                case 5:
-                    img.setText("A6");
-
-                    drama.setText("场景6：车云OTA场景");
-                    dramaContent.setText("车辆从场景5继续行驶，驶向场景6达到黄色点位停止，触发场景动画效果。沙盘建筑场景为停车场（停车场出入口可安装自动闸机，进出不停车自动抬杆），车辆停在车场停车位（车位可安装LED灯带，显示停车位置），安装场景名称灯牌。");
-                    break;
+            img.setImageResource(getItem(position).DramaImgId);
+            drama.setText(getItem(position).DramaName);
+            if(getItem(position).isPending&&!getItem(position).isStop){
+                OnOff.setImageResource(R.drawable.pending);
             }
+            if(getItem(position).isStop&&!getItem(position).isPending){
+                OnOff.setImageResource(R.drawable.stop);
+            }else if(!getItem(position).isStop && !getItem(position).isPending) {
+                OnOff.setImageResource(R.drawable.start);
+            }
+
+
             return view;
         }
     };

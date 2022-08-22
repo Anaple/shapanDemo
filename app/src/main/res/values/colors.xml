@@ -9,11 +9,14 @@
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#ffffff</color>
-    <color name="iconBackground">#67A4CC</color>
-
-    <color name="background">#DCDCDC</color>
-
+    <color name="iconBackground">#1890ff</color>
+    <color name="stop">#f5222d</color>
+    <color name="pending">#1890ff</color>
+    <color name="start">#52c41a</color>
+    <color name="background">#f0f0f0</color>
+    <color name="gray">#8c8c8c</color>
     <color name="item_background">#F5F5F5</color>
+    <color name="online">#52c41a</color>
 item_background
 
 </resources>
