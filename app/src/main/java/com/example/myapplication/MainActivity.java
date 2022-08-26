@@ -176,21 +176,13 @@ public class MainActivity extends AppCompatActivity {
     public CallBack callBack = new CallBack() {
         @Override
         public void initSuccess() {
-            handler.sendMessage(new Message());
-        }
 
+
+        }
         @Override
         public void DramaOperation(int index) {
-            if (index == 6) {
 
-                handler.sendMessage(new Message());
-            } else if (index == 0) {
-
-                handler.sendMessage(new Message());
-            } else {
-
-                handler.sendMessage(new Message());
-            }
+            handler.sendMessage(new Message());
 
         }
 
@@ -224,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
         UIOperation.SetFullScreen(this);
         initView();
         initOnClickListener();
+        initDramaBeans();
         MyServer.BeginConnection(netWorkCallBack);
         MyServer.Begin(callBack);
 
@@ -239,7 +232,6 @@ public class MainActivity extends AppCompatActivity {
         dramaImg = findViewById(R.id.drama_picture);
         dramaText = findViewById(R.id.drama_text);
         DramaList.setAdapter(DramaAdapter);
-        initDramaBeans();
         dramaText.setText(R.string.deafult_text);
 
     }
@@ -320,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
                     new Thread(() -> {
                         try {
                             byte[] data = Agreement.getDrama((byte) (position + 1));
-                            MyServer.MySocket.getOutputStream().write(data);
+
                             CurrentDrama = 6;
 
                             if(!getItem(position).isStop&&!getItem(position).isPending) {
@@ -335,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 }
                                 handlerDrama.sendMessage(new Message());
-
+                                MyServer.MySocket.getOutputStream().write(data);
                             }else {
                                 Toast.makeText(MainActivity.this, getResources().getString(R.string.drama_wait), Toast.LENGTH_SHORT).show();
                             }
@@ -364,8 +356,11 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
+
             img.setImageResource(getItem(position).DramaImgId);
             drama.setText(getItem(position).DramaName);
+
+
             if(getItem(position).isPending&&!getItem(position).isStop){
                 OnOff.setImageResource(R.drawable.pending);
             }

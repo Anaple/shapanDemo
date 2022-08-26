@@ -68,11 +68,6 @@ public class MyServer
                     {
                         callBack.DramaOperation(data[2]);
                     }
-                    // 检查情景
-                    if(data[1] == 8)
-                    {
-                        callBack.DramaOperation(data[2]);
-                    }
                     // 电量
                     if(data[1] == 11)
                     {
