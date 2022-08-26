@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void initDramaBeans(){
-
         dramaBeans.add(new DramaBean(R.drawable.drama_a1_icon,"车联网密码应用测试床：灌装测试床",false,false));
         dramaBeans.add(new DramaBean(R.drawable.drama_a2_icon,"车联网密码应用测试床：车人测试床",false,false));
         dramaBeans.add(new DramaBean(R.drawable.drama_a3_icon,"车联网密码应用测试床：车内测试床",false,false));
@@ -59,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         dramaBeans.add(new DramaBean(R.drawable.drama_a5_icon,"车联网密码应用测试床：车际测试床-车车通信",false,false));
         dramaBeans.add(new DramaBean(R.drawable.drama_a6_icon,"车联网密码应用测试床：车云测试床",false,false));
     }
-
 
     public final static int [] PIC_SRC={R.drawable.deafult_drama,R.drawable.drama_pic_1,R.drawable.drama_pic_2,R.drawable.drama_pic_3,R.drawable.drama_pic_4,R.drawable.drama_pic_5,R.drawable.drama_pic_6};
     public final static int [] STRING_SRC = {R.string.deafult_text,R.string.drama_text_1,R.string.drama_text_2,R.string.drama_text_3,R.string.drama_text_4,R.string.drama_text_5,R.string.drama_text_6};
@@ -136,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void handleMessage(@NonNull Message msg) {
             carBattery.setText(msg.what+"%");
-           
+
         }
     };
 
@@ -212,7 +210,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void DramaFinish(int DramaIndex){
-
             handlerVideo.sendEmptyMessage(DramaIndex);
 
         }

@@ -74,12 +74,12 @@ public class MyServer
                         callBack.DramaOperation(data[2]);
                     }
                     // 电量
-                    if(data[1] == 12)
+                    if(data[1] == 11)
                     {
                         callBack.dianliang(data[2]);
                     }
                     // 车辆检查
-                    if(data[1] == 11)
+                    if(data[1] == 12)
                     {
                         callBack.CarStateOK(data[2]);
 
