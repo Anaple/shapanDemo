@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class MyServer
 {
 
-    public static String IP   = "192.168.31.105";
+    public static String IP   = "192.168.223.79";
     public static int    PORT = 1235;
     public static volatile Socket MySocket = null;
 
@@ -76,16 +76,16 @@ public class MyServer
                     // 电量
                     if(data[1] == 12)
                     {
-                        callBack.dianliang(data[2],data[3]);
+                        callBack.dianliang(data[2]);
                     }
                     // 车辆检查
                     if(data[1] == 11)
                     {
-                        callBack.CarStateOK(data[2],data[3]);
+                        callBack.CarStateOK(data[2]);
 
                     }
                     if(data[1] == 14){
-                        callBack.DramaFinish(data[3]);
+                        callBack.DramaFinish(data[2]);
                     }
                     Log.i("SOCKET", Arrays.toString(data));
 

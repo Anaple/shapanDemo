@@ -9,15 +9,11 @@ public interface CallBack {
     void DramaOperation(int index);
 
     // 电量
-    void dianliang(int CarIndex,byte number);
+    void dianliang(int CarIndex);
 
     // 检查车辆正常
-    void CarStateOK(int carIndex,int canUse);
+    void CarStateOK(int carIndex);
 
-    // 检查车辆错误
-    void CarStateError(int carIndex);
-
-    void DramaSuccess(int dramaIndex);
 
     //
     void DramaFinish(int dramaIndex);

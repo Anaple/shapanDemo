@@ -1,6 +1,6 @@
 package com.example.myapplication;
 
-import static android.util.TypedValue.COMPLEX_UNIT_DIP;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,11 +8,7 @@ import androidx.percentlayout.widget.PercentRelativeLayout;
 import android.annotation.SuppressLint;
 
 
-import android.content.res.ColorStateList;
-import android.content.res.Resources;
-import android.media.MediaPlayer;
-import android.media.session.MediaController;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,13 +16,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.example.myapplication.bean.DramaBean;
 import com.example.myapplication.config.UIOperation;
@@ -82,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     public final Handler handlerDrama = new Handler() {
+        @SuppressLint("HandlerLeak")
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
@@ -96,10 +90,6 @@ public class MainActivity extends AppCompatActivity {
             super.handleMessage(msg);
             dramaText.setText(STRING_SRC[msg.what]);
             dramaImg.setImageResource(PIC_SRC[msg.what]);
- //           Toast.makeText(MainActivity.this, "场景:"+ "" + msg.what, Toast.LENGTH_SHORT).show();
-//            dramaVideo.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" +VIDEO_SRC[msg.what-1] ));
-//            Toast.makeText(MainActivity.this, "播放场景:"+ "" + msg.what, Toast.LENGTH_SHORT).show();
-//            dramaVideo.start();
         }
     };
 
@@ -110,8 +100,23 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(@NonNull Message msg) {
             if (msg.what > 0) {
                 //有效车辆
+
                 carConnectIcon.setTextColor(getResources().getColor(R.color.start));
                 carConnect.setText(R.string.connected);
+
+                if (MyServer.MySocket != null) {
+                    new Thread(() -> {
+
+                        try {
+                            MyServer.MySocket.getOutputStream().write(Agreement.getBattery((byte) 0));
+
+                        } catch (Exception e) {
+                            Log.e("CarClick", "SOCKET", e);
+                        }
+                    }).start();
+                }
+
+
                 Toast.makeText(MainActivity.this, getResources().getString(R.string.car_connected) + "" + msg.what, Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(MainActivity.this, getResources().getString(R.string.no_car_connected), Toast.LENGTH_SHORT).show();
@@ -147,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i("SOCKET", getResources().getString(R.string.network_success));
             MyServer.MySocket = socket;
             try {
-                socket.getOutputStream().write(Agreement.getDramaState());
+
             } catch (Exception e) {
                 Log.e("CarClick", "SOCKET", e);
             }
@@ -164,79 +169,56 @@ public class MainActivity extends AppCompatActivity {
     public CallBack callBack = new CallBack() {
         @Override
         public void initSuccess() {
-            CurrentDrama = -1;
             handler.sendMessage(new Message());
         }
 
         @Override
         public void DramaOperation(int index) {
             if (index == 6) {
-                CurrentDrama = -1;
+
                 handler.sendMessage(new Message());
             } else if (index == 0) {
-                CurrentDrama = -1;
+
                 handler.sendMessage(new Message());
             } else {
-                CurrentDrama = index - 1;
+
                 handler.sendMessage(new Message());
             }
 
         }
 
         @Override
-        public void dianliang(int CarIndex, byte number) {
-            handler4.sendEmptyMessage(number);
+        public void dianliang(int CarIndex) {
+            handler4.sendEmptyMessage(CarIndex);
         }
 
         @Override
-        public void CarStateOK(int carIndex, int canUse) {
+        public void CarStateOK( int canUse) {
             if (connectedCarArr.isEmpty()) {
-                connectedCarArr.add(new ConnectedCarBean(carIndex, canUse == 0,0));
-                handler2.sendEmptyMessage(carIndex);
+                connectedCarArr.add(new ConnectedCarBean(1, canUse == 0,0));
+                handler2.sendEmptyMessage(1);
+
             } else {
                 int flag = 0;
                 for (ConnectedCarBean carBean : connectedCarArr
                 ) {
-                    if (carBean.getCarIndex() != carIndex) {
+                    if (carBean.getCarIndex() != 1) {
                         flag++;
-                    } else if (carIndex == carBean.getCarIndex() && (carBean.isCanUse() != (canUse == 0))) {
+                    } else if (1 == carBean.getCarIndex() && (carBean.isCanUse() != (canUse == 0))) {
                         carBean.setCanUse(canUse == 0);
-                        handler2.sendEmptyMessage(carIndex);
+                        handler2.sendEmptyMessage(1);
                     }
 
                 }
                 if (flag >= connectedCarArr.size()) {
-                    connectedCarArr.add(new ConnectedCarBean(carIndex, canUse == 0,0));
-                    handler2.sendEmptyMessage(carIndex);
+                    connectedCarArr.add(new ConnectedCarBean(1, canUse == 0,0));
+                    handler2.sendEmptyMessage(1);
                 }
             }
 
 
         }
 
-        @Override
-        public void CarStateError(int carIndex) {
-            //弃用
-            if (connectedCarArr.isEmpty() || !connectedCarArr.contains(new ConnectedCarBean(carIndex, false,0))) {
-            }
-
-        }
-
-        @Override
-        public void DramaSuccess(int index) {
-            if (index != -2) {
-                CurrentDrama = index;
-                handler.sendMessage(new Message());
-                try {
-                    MyServer.MySocket.getOutputStream().write(Agreement.getDramaIndex());
-                } catch (Exception e) {
-                    Log.e("DRAMA", "SOCKET", e);
-                }
-            } else if (index == 12) {
-                CurrentDrama = -1;
-                handler.sendMessage(new Message());
-            }
-        }
         @Override
         public void DramaFinish(int DramaIndex){
 
@@ -261,7 +243,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         DramaList = findViewById(R.id.drama_choose);
-        //dramaVideo = findViewById(R.id.drama_video);
         NetworkCheck = findViewById(R.id.network_check);
         CarCheck = findViewById(R.id.car_check);
         carBattery = findViewById(R.id.car_battery);
@@ -291,10 +272,8 @@ public class MainActivity extends AppCompatActivity {
                 new Thread(() -> {
 
                     try {
-                        for (int i = 0; i < 3; i++) {
-                            MyServer.MySocket.getOutputStream().write(Agreement.getCar((byte) i));
+                        MyServer.MySocket.getOutputStream().write(Agreement.getCar((byte) 1));
 
-                        }
                     } catch (Exception e) {
                         Log.e("CarClick", "SOCKET", e);
                     }
@@ -302,9 +281,6 @@ public class MainActivity extends AppCompatActivity {
 
             } else {
                 Toast.makeText(MainActivity.this, getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
-
-                //TEST
-                callBack.CarStateOK(1, 0);
 
             }
         });
