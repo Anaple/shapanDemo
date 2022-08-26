@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+
     @SuppressLint("HandlerLeak")
     public  Handler handler3 = new Handler(){
         @Override
@@ -135,8 +136,18 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void handleMessage(@NonNull Message msg) {
             carBattery.setText(msg.what+"%");
-           // carBattery.setTextSize(COMPLEX_UNIT_DIP,24);
-            //Toast.makeText(MainActivity.this, msg.what+ "%", Toast.LENGTH_SHORT).show();
+           
+        }
+    };
+
+    @SuppressLint("HandlerLeak")
+    public  Handler handlerCarStatus = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            carBattery.setText("未连接");
+            carConnectIcon.setTextColor(getResources().getColor(R.color.gray));
+            carConnect.setText("未连接");
+
         }
     };
 
@@ -192,29 +203,11 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void CarStateOK( int canUse) {
-            if (connectedCarArr.isEmpty()) {
-                if(canUse == 0) {
+            if(canUse == 0) {
                     handler2.sendEmptyMessage(1);
-                }
-            } else {
-                int flag = 0;
-                for (ConnectedCarBean carBean : connectedCarArr
-                ) {
-                    if (carBean.getCarIndex() != 1) {
-                        flag++;
-                    } else if (1 == carBean.getCarIndex() && (carBean.isCanUse() != (canUse == 0))) {
-                        carBean.setCanUse(canUse == 0);
-                        handler2.sendEmptyMessage(1);
-                    }
-
-                }
-                if (flag >= connectedCarArr.size()) {
-                    connectedCarArr.add(new ConnectedCarBean(1, canUse == 0,0));
-                    handler2.sendEmptyMessage(1);
-                }
+            }else {
+                    handlerCarStatus.sendMessage(new Message());
             }
-
-
         }
 
         @Override
