@@ -100,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(@NonNull Message msg) {
             if (msg.what > 0) {
                 //有效车辆
-
                 carConnectIcon.setTextColor(getResources().getColor(R.color.start));
                 carConnect.setText(R.string.connected);
 
@@ -115,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }).start();
                 }
-
 
                 Toast.makeText(MainActivity.this, getResources().getString(R.string.car_connected) + "" + msg.what, Toast.LENGTH_SHORT).show();
             } else {
@@ -195,9 +193,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void CarStateOK( int canUse) {
             if (connectedCarArr.isEmpty()) {
-                connectedCarArr.add(new ConnectedCarBean(1, canUse == 0,0));
-                handler2.sendEmptyMessage(1);
-
+                if(canUse == 0) {
+                    handler2.sendEmptyMessage(1);
+                }
             } else {
                 int flag = 0;
                 for (ConnectedCarBean carBean : connectedCarArr
@@ -261,8 +259,15 @@ public class MainActivity extends AppCompatActivity {
 
         NetworkCheck.setOnClickListener(view -> {
             if (MyServer.MySocket != null) {
+
+
+
                 Toast.makeText(MainActivity.this, getResources().getString(R.string.network_success), Toast.LENGTH_SHORT).show();
             } else {
+
+                MyServer.BeginConnection(netWorkCallBack);
+                MyServer.Begin(callBack);
+
                 Toast.makeText(MainActivity.this, getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
                 connectedCarArr.clear();
             }
