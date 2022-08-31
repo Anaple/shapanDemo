@@ -77,11 +77,11 @@ public class MyServer
                     if(data[1] == 12)
                     {
                         callBack.CarStateOK(data[2]);
-
                     }
                     if(data[1] == 14){
                         callBack.DramaFinish(data[2]);
                     }
+
                     Log.i("SOCKET", Arrays.toString(data));
 
                 }

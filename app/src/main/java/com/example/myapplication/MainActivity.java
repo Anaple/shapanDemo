@@ -8,7 +8,6 @@ import androidx.percentlayout.widget.PercentRelativeLayout;
 import android.annotation.SuppressLint;
 
 
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -38,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     public PercentRelativeLayout NetworkCheck;
     public PercentRelativeLayout CarCheck;
 
-
     public ListView DramaList;
     public ImageView dramaImg;
     public TextView dramaText;
@@ -51,12 +49,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void initDramaBeans(){
-        dramaBeans.add(new DramaBean(R.drawable.drama_a1_icon,"车联网密码应用测试床：灌装测试床",false,false));
-        dramaBeans.add(new DramaBean(R.drawable.drama_a2_icon,"车联网密码应用测试床：车人测试床",false,false));
-        dramaBeans.add(new DramaBean(R.drawable.drama_a3_icon,"车联网密码应用测试床：车内测试床",false,false));
-        dramaBeans.add(new DramaBean(R.drawable.drama_a4_icon,"车联网密码应用测试床：车际测试床-车路通信",false,false));
-        dramaBeans.add(new DramaBean(R.drawable.drama_a5_icon,"车联网密码应用测试床：车际测试床-车车通信",false,false));
-        dramaBeans.add(new DramaBean(R.drawable.drama_a6_icon,"车联网密码应用测试床：车云测试床",false,false));
+        dramaBeans.add(new DramaBean(R.drawable.drama_a1_icon,"灌装测试床",false,false));
+        dramaBeans.add(new DramaBean(R.drawable.drama_a2_icon,"车人测试床",false,false));
+        dramaBeans.add(new DramaBean(R.drawable.drama_a3_icon,"车内测试床",false,false));
+        dramaBeans.add(new DramaBean(R.drawable.drama_a4_icon,"车际测试床-车路通信",false,false));
+        dramaBeans.add(new DramaBean(R.drawable.drama_a5_icon,"车际测试床-车车通信",false,false));
+        dramaBeans.add(new DramaBean(R.drawable.drama_a6_icon,"车云测试床",false,false));
+    }
+    public void initSocketConnect(){
+
     }
 
     public final static int [] PIC_SRC={R.drawable.deafult_drama,R.drawable.drama_pic_1,R.drawable.drama_pic_2,R.drawable.drama_pic_3,R.drawable.drama_pic_4,R.drawable.drama_pic_5,R.drawable.drama_pic_6};
@@ -100,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
                 //有效车辆
                 carConnectIcon.setTextColor(getResources().getColor(R.color.start));
                 carConnect.setText(R.string.connected);
-
                 if (MyServer.MySocket != null) {
                     new Thread(() -> {
 
