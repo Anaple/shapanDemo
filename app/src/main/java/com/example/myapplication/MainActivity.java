@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     public TextView dramaText;
     public TextView carBattery;
     public TextView carConnect;
-    public TextView carConnectIcon;
+//    public TextView carConnectIcon;
 
     public static ArrayList<ConnectedCarBean> connectedCarArr = new ArrayList<>();
     public static ArrayList<DramaBean> dramaBeans = new ArrayList<>();
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(@NonNull Message msg) {
             if (msg.what > 0) {
                 //有效车辆
-                carConnectIcon.setTextColor(getResources().getColor(R.color.start));
+//                carConnectIcon.setTextColor(getResources().getColor(R.color.start));
                 carConnect.setText(R.string.connected);
                 if (MyServer.MySocket != null) {
                     new Thread(() -> {
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void handleMessage(@NonNull Message msg) {
             carBattery.setText("未连接");
-            carConnectIcon.setTextColor(getResources().getColor(R.color.gray));
+//            carConnectIcon.setTextColor(getResources().getColor(R.color.gray));
             carConnect.setText("未连接");
 
         }
@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
         NetworkCheck = findViewById(R.id.network_check);
         CarCheck = findViewById(R.id.car_check);
         carBattery = findViewById(R.id.car_battery);
-        carConnectIcon = findViewById(R.id.car_connect_ic);
+//        carConnectIcon = findViewById(R.id.car_connect_ic);
         carConnect =findViewById(R.id.car_connect);
         dramaImg = findViewById(R.id.drama_picture);
         dramaText = findViewById(R.id.drama_text);

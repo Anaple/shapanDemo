@@ -175,18 +175,18 @@
                     android:layout_marginTop="10dp"
 
                     />
-                <!--  连接状态  -->
-                <TextView
-                    android:id="@+id/car_connect_ic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="60dp"
-                    android:text="."
-                    android:textSize="40dp"
-                    android:textColor="@color/gray"
+<!--                &lt;!&ndash;  连接状态  &ndash;&gt;-->
+<!--                <TextView-->
+<!--                    android:id="@+id/car_connect_ic"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="60dp"-->
+<!--                    android:text="."-->
+<!--                    android:textSize="40dp"-->
+<!--                    android:textColor="@color/gray"-->
 
 
-                    />
+<!--                    />-->
                 <TextView
                     android:id="@+id/car_connect"
                     android:layout_width="wrap_content"
