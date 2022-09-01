@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     public PercentRelativeLayout NetworkCheck;
     public PercentRelativeLayout CarCheck;
+    public PercentRelativeLayout ExitApp;
 
     public ListView DramaList;
     public ImageView dramaImg;
@@ -49,12 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void initDramaBeans(){
+
         dramaBeans.add(new DramaBean(R.drawable.drama_a1_icon,"灌装测试床",false,false));
         dramaBeans.add(new DramaBean(R.drawable.drama_a2_icon,"车人测试床",false,false));
         dramaBeans.add(new DramaBean(R.drawable.drama_a3_icon,"车内测试床",false,false));
         dramaBeans.add(new DramaBean(R.drawable.drama_a4_icon,"车际测试床-车路通信",false,false));
         dramaBeans.add(new DramaBean(R.drawable.drama_a5_icon,"车际测试床-车车通信",false,false));
         dramaBeans.add(new DramaBean(R.drawable.drama_a6_icon,"车云测试床",false,false));
+
     }
     public void initSocketConnect(){
 
@@ -70,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
             dramaBeans.clear();
             initDramaBeans();
             DramaAdapter.notifyDataSetChanged();
+            handlerVideo.sendEmptyMessage(0);
         }
     };
 
@@ -229,6 +233,7 @@ public class MainActivity extends AppCompatActivity {
         carBattery = findViewById(R.id.car_battery);
 //        carConnectIcon = findViewById(R.id.car_connect_ic);
         carConnect =findViewById(R.id.car_connect);
+        ExitApp = findViewById(R.id.exit_app);
         dramaImg = findViewById(R.id.drama_picture);
         dramaText = findViewById(R.id.drama_text);
         DramaList.setAdapter(DramaAdapter);
@@ -272,6 +277,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ExitApp.setOnClickListener(view ->{
+            super.finishAffinity();
+        });
+
 
     }
 
@@ -305,9 +314,10 @@ public class MainActivity extends AppCompatActivity {
             TextView drama = view.findViewById(R.id.drama);
 
             OnOff.setOnClickListener(v -> {
-
+                handlerVideo.sendEmptyMessage(position+1);
                 if (MyServer.MySocket != null)
                 {
+
 
                     new Thread(() -> {
                         try {

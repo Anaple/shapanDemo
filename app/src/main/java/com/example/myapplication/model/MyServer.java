@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class MyServer
 {
 
-    public static String IP   = "192.168.223.79";
+    public static String IP   = "192.168.1.100";
     public static int    PORT = 1235;
     public static volatile Socket MySocket = null;
 
