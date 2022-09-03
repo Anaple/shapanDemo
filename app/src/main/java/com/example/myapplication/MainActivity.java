@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     public TextView dramaText;
     public TextView carBattery;
     public TextView carConnect;
-//    public TextView carConnectIcon;
 
     public static ArrayList<ConnectedCarBean> connectedCarArr = new ArrayList<>();
     public static ArrayList<DramaBean> dramaBeans = new ArrayList<>();
@@ -73,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
             dramaBeans.clear();
             initDramaBeans();
             DramaAdapter.notifyDataSetChanged();
-            handlerVideo.sendEmptyMessage(0);
         }
     };
 
@@ -242,6 +240,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //系统命令模块按钮
+    @SuppressLint("NewApi")
     private void initOnClickListener() {
 
         NetworkCheck.setOnClickListener(view -> {
@@ -278,7 +277,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ExitApp.setOnClickListener(view ->{
+
             super.finishAffinity();
+            System.exit(0);
+
         });
 
 
@@ -317,14 +319,10 @@ public class MainActivity extends AppCompatActivity {
                 handlerVideo.sendEmptyMessage(position+1);
                 if (MyServer.MySocket != null)
                 {
-
-
                     new Thread(() -> {
                         try {
                             byte[] data = Agreement.getDrama((byte) (position + 1));
-
                             CurrentDrama = 6;
-
                             if(!getItem(position).isStop&&!getItem(position).isPending) {
                                 for (int i = 0; i < CurrentDrama; i++) {
                                     if (i == position) {
@@ -369,8 +367,6 @@ public class MainActivity extends AppCompatActivity {
 
             img.setImageResource(getItem(position).DramaImgId);
             drama.setText(getItem(position).DramaName);
-
-
             if(getItem(position).isPending&&!getItem(position).isStop){
                 OnOff.setImageResource(R.drawable.pending);
             }
@@ -379,8 +375,6 @@ public class MainActivity extends AppCompatActivity {
             }else if(!getItem(position).isStop && !getItem(position).isPending) {
                 OnOff.setImageResource(R.drawable.start);
             }
-
-
             return view;
         }
     };
