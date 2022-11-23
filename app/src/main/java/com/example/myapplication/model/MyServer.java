@@ -58,6 +58,7 @@ public class MyServer
                 {
                     byte[] data = new byte[5];
                     inputStream.read(data);
+                    if(data.length == 1) continue;
                     // 车辆初始化
                     if(data[1] == 0)
                     {

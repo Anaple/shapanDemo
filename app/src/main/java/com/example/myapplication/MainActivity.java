@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     public PercentRelativeLayout NetworkCheck;
     public PercentRelativeLayout CarCheck;
     public PercentRelativeLayout ExitApp;
+    public PercentRelativeLayout ResetApp;
+
 
     public ListView DramaList;
     public ImageView dramaImg;
@@ -58,10 +60,6 @@ public class MainActivity extends AppCompatActivity {
         dramaBeans.add(new DramaBean(R.drawable.drama_a6_icon,"车云测试床",false,false));
 
     }
-    public void initSocketConnect(){
-
-    }
-
     public final static int [] PIC_SRC={R.drawable.deafult_drama,R.drawable.drama_pic_1,R.drawable.drama_pic_2,R.drawable.drama_pic_3,R.drawable.drama_pic_4,R.drawable.drama_pic_5,R.drawable.drama_pic_6};
     public final static int [] STRING_SRC = {R.string.deafult_text,R.string.drama_text_1,R.string.drama_text_2,R.string.drama_text_3,R.string.drama_text_4,R.string.drama_text_5,R.string.drama_text_6};
     @SuppressLint("HandlerLeak")
@@ -151,6 +149,33 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    public void resetApp(){
+        if (MyServer.MySocket != null) {
+            new Thread(() -> {
+                try {
+                    MyServer.MySocket.getOutputStream().write(Agreement.resetMsg());
+
+                } catch (Exception e) {
+                    Log.e("CarClick", "SOCKET", e);
+                }
+            }).start();
+        }
+
+        MyServer.MySocket = null;
+        dramaBeans.clear();
+        handlerDrama.handleMessage(new Message());
+        handlerVideo.sendEmptyMessage(0);
+        carBattery.setText("未连接");
+        carConnect.setText("未连接");
+
+        initDramaBeans();
+        MyServer.BeginConnection(netWorkCallBack);
+        MyServer.Begin(callBack);
+
+
+
+    }
+
 
     //网络检查
 
@@ -235,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
         dramaImg = findViewById(R.id.drama_picture);
         dramaText = findViewById(R.id.drama_text);
         DramaList.setAdapter(DramaAdapter);
+        ResetApp = findViewById(R.id.reset_app);
         dramaText.setText(R.string.deafult_text);
 
     }
@@ -281,6 +307,10 @@ public class MainActivity extends AppCompatActivity {
             super.finishAffinity();
             System.exit(0);
 
+        });
+
+        ResetApp.setOnClickListener(view -> {
+            resetApp();
         });
 
 

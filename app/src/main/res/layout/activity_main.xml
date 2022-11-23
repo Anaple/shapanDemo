@@ -117,7 +117,7 @@
                     android:textSize="16dp" />
 
             </androidx.percentlayout.widget.PercentRelativeLayout>
-            <!--  车辆检查 : 所有车前后移动 -->
+            <!-- 退出APP -->
             <androidx.percentlayout.widget.PercentRelativeLayout
                 android:id="@+id/exit_app"
 
@@ -128,10 +128,7 @@
                 app:layout_heightPercent="25%"
                 app:layout_marginLeftPercent="80%"
                 app:layout_marginTopPercent="0%"
-
-
-                app:layout_widthPercent="47%">
-
+                app:layout_widthPercent="20%">
                 <ImageView
                     android:layout_width="12dp"
                     android:layout_height="12dp"
@@ -146,6 +143,36 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:text="退出"
+
+                    android:textSize="12dp" />
+
+            </androidx.percentlayout.widget.PercentRelativeLayout>
+
+            <!-- 退出APP -->
+            <androidx.percentlayout.widget.PercentRelativeLayout
+                android:id="@+id/reset_app"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="50dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:layout_heightPercent="25%"
+                app:layout_marginLeftPercent="60%"
+                app:layout_marginTopPercent="0%"
+                app:layout_widthPercent="20%">
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/reset" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="重置"
 
                     android:textSize="12dp" />
 
@@ -167,14 +194,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lastBaselineToBottomHeight="@dimen/cardview_default_elevation"
                 android:text="车辆状态"
                 android:textColor="#000"
                 android:textSize="18dp"
                 android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                app:layout_marginLeftPercent="5%"
-                android:lastBaselineToBottomHeight="@dimen/cardview_default_elevation"
-                />
+                app:layout_marginLeftPercent="5%" />
 
 
             <androidx.percentlayout.widget.PercentRelativeLayout
@@ -194,32 +220,31 @@
                     android:layout_height="match_parent"
                     android:text="在线状态"
                     android:textSize="8dp"
-                    app:layout_marginLeftPercent="15%"
-                    />
+                    app:layout_marginLeftPercent="15%" />
 
                 <!--  车辆图标  -->
                 <ImageView
                     android:id="@+id/car_icon"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
                     android:src="@drawable/black_car"
                     app:layout_heightPercent="85%"
                     app:layout_marginLeftPercent="8%"
-                    android:layout_marginTop="10dp"
 
                     />
-<!--                &lt;!&ndash;  连接状态  &ndash;&gt;-->
-<!--                <TextView-->
-<!--                    android:id="@+id/car_connect_ic"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="60dp"-->
-<!--                    android:text="."-->
-<!--                    android:textSize="40dp"-->
-<!--                    android:textColor="@color/gray"-->
+                <!--                &lt;!&ndash;  连接状态  &ndash;&gt;-->
+                <!--                <TextView-->
+                <!--                    android:id="@+id/car_connect_ic"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginLeft="60dp"-->
+                <!--                    android:text="."-->
+                <!--                    android:textSize="40dp"-->
+                <!--                    android:textColor="@color/gray"-->
 
 
-<!--                    />-->
+                <!--                    />-->
                 <TextView
                     android:id="@+id/car_connect"
                     android:layout_width="wrap_content"
@@ -242,15 +267,14 @@
                 app:layout_heightPercent="80%"
                 app:layout_marginRightPercent="1%"
                 app:layout_marginTopPercent="40%"
-                app:layout_widthPercent="47%"
-                >
+                app:layout_widthPercent="47%">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="电池电量"
                     android:textSize="8dp"
-                    app:layout_marginLeftPercent="15%"
-                    />
+                    app:layout_marginLeftPercent="15%" />
 
 
                 <!--  车辆图标  -->
@@ -258,11 +282,10 @@
                     android:id="@+id/battery_icon"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
                     android:src="@drawable/dianchi"
                     app:layout_heightPercent="85%"
-                    app:layout_marginLeftPercent="15%"
-                    android:layout_marginTop="10dp"
-                    />
+                    app:layout_marginLeftPercent="15%" />
                 <!--  剩余电量  -->
                 <TextView
                     android:id="@+id/car_battery"

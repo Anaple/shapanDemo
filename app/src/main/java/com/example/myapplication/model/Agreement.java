@@ -32,6 +32,11 @@ public class Agreement {
         return data;
     }
 
+    //重置消息
+    public static byte[] resetMsg(){
+        return  new byte[]{0x55,0x0F,0x00,0x56};
+    }
+
 
 
 
